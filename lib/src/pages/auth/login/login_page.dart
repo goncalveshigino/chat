@@ -15,8 +15,17 @@ class _LoginPageState extends State<LoginPage> {
       body: SizedBox(
         width: double.infinity,
         child: Stack(
-          
           children: [
+            Positioned(
+              top: -80,
+              left: -100,
+              child: _circleLogin(),
+            ),
+            Positioned(
+              top: 60,
+              left: 25,
+              child: _textLogin(),
+            ),
             Column(
               children: [
                 _imageBanner(),
@@ -49,15 +58,25 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _textLogin() {
+    return const Text(
+      'LOGIN',
+      style: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 22,
+      ),
+    );
+  }
+
   Widget _circleLogin() {
     return Container(
       width: 240,
-      height: 240,
+      height: 210,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
         color: MyColors.primaryColor,
       ),
-      child: const Text('Login'),
     );
   }
 
