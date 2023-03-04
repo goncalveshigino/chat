@@ -1,14 +1,16 @@
+import 'package:chat/src/pages_routes/page_routes.dart';
 import 'package:chat/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +44,16 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       width: 7,
                     ),
-                    Text(
-                      'Cadastra-se',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: MyColors.primaryColor),
+                    GestureDetector(
+                      child: Text(
+                        'Cadastra-se',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: MyColors.primaryColor),
+                      ),
+                      onTap: () {
+                        Get.toNamed(PagesRoutes.signUpRoute);
+                      },
                     )
                   ],
                 ),
@@ -145,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
         bottom: MediaQuery.of(context).size.height * 0.22,
       ),
       child: Image.asset(
-        'assets/img/delivery.png',
+        'assets/img/chat.png',
         width: 200,
         height: 200,
       ),

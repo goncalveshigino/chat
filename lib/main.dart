@@ -1,7 +1,11 @@
-import 'package:chat/src/pages/auth/login/login_page.dart';
+import 'package:chat/src/pages_routes/page_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 
 void main() {
+   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -10,13 +14,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Delivery App Flutter',
-      initialRoute: 'login',
-      routes: {
-        'login': (BuildContext contex) => const LoginPage(),
-      },
+      title: 'Chat App Flutter',
+      initialRoute: PagesRoutes.signInRoute,
+      getPages: AppPages.pages,
+      navigatorKey: Get.key,
       theme: ThemeData(
          primarySwatch: Colors.red,
       ),
