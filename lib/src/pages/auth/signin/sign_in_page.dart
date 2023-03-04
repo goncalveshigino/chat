@@ -3,14 +3,12 @@ import 'package:chat/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignInPage extends StatefulWidget {
+import '../../../../common_widgets/custom_sign_in_or_sign_up.dart';
+import '../../../../common_widgets/custom_text_field.dart';
+
+class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
 
-  @override
-  State<SignInPage> createState() => _SignInPageState();
-}
-
-class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,41 +21,51 @@ class _SignInPageState extends State<SignInPage> {
               left: -100,
               child: _circleLogin(),
             ),
-            Positioned(
+            const Positioned(
               top: 60,
               left: 25,
-              child: _textLogin(),
+              child: CustumSignInOrSignUp(text: 'SignIn'),
             ),
-            Column(
-              children: [
-                _imageBanner(),
-                _texFieldEmail(),
-                _textFieldPassword(),
-                _bottonLogin(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Nao tem uma conta?',
-                      style: TextStyle(color: MyColors.primaryColor),
-                    ),
-                    const SizedBox(
-                      width: 7,
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        'Cadastra-se',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: MyColors.primaryColor),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  _imageBanner(context),
+                  const CustomTextField(
+                    hintText: 'Email',
+                    icon: Icons.email,
+                    textInputType: TextInputType.emailAddress,
+                  ),
+                  const CustomTextField(
+                    hintText: 'Password',
+                    icon: Icons.lock,
+                    isSecret: true,
+                  ),
+                  _bottonLogin(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Nao tem uma conta?',
+                        style: TextStyle(color: MyColors.primaryColor),
                       ),
-                      onTap: () {
-                        Get.toNamed(PagesRoutes.signUpRoute);
-                      },
-                    )
-                  ],
-                ),
-              ],
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      GestureDetector(
+                        child: Text(
+                          'Cadastra-se',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: MyColors.primaryColor),
+                        ),
+                        onTap: () {
+                          Get.toNamed(PagesRoutes.signUpRoute);
+                        },
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -67,7 +75,7 @@ class _SignInPageState extends State<SignInPage> {
 
   Widget _textLogin() {
     return const Text(
-      'LOGIN',
+      'SignIn',
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
@@ -125,27 +133,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget _texFieldEmail() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-      decoration: BoxDecoration(
-          color: MyColors.primaryOpacityColor,
-          borderRadius: BorderRadius.circular(30)),
-      child: TextField(
-        decoration: InputDecoration(
-            hintText: 'Email',
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.all(15),
-            hintStyle: TextStyle(color: MyColors.primaryColorDark),
-            prefixIcon: Icon(
-              Icons.email,
-              color: MyColors.primaryColor,
-            )),
-      ),
-    );
-  }
-
-  Widget _imageBanner() {
+  Widget _imageBanner(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
         top: 100,

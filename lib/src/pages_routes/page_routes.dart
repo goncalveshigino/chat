@@ -1,5 +1,5 @@
 import 'package:chat/src/pages/auth/signin/sign_in_page.dart';
-import 'package:chat/src/pages/auth/signup/signup_page.dart';
+import 'package:chat/src/pages/auth/signup/sign_up_page.dart';
 import 'package:get/get.dart';
 
 abstract class PagesRoutes {
