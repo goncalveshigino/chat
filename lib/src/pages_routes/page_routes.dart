@@ -1,6 +1,7 @@
-import 'package:chat/src/pages/auth/signin/sign_in_page.dart';
-import 'package:chat/src/pages/auth/signup/sign_up_page.dart';
 import 'package:get/get.dart';
+
+import '../pages/auth/view/sign_in_page.dart';
+import '../pages/auth/view/sign_up_page.dart';
 
 abstract class PagesRoutes {
   static const String signInRoute = '/signin';
@@ -11,11 +12,11 @@ abstract class AppPages {
   static final pages = <GetPage>[
     GetPage(
       name: PagesRoutes.signUpRoute,
-      page: () => const SignUpPage(),
+      page: () =>  SignUpPage(),
     ),
     GetPage(
       name: PagesRoutes.signInRoute,
-      page: () => const SignInPage(),
+      page: () => SignInPage(),
     ),
   ];
 }

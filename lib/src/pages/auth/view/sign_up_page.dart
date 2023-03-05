@@ -1,3 +1,4 @@
+import 'package:chat/src/pages/auth/controller/sign_up_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:chat/src/utils/my_colors.dart';
@@ -6,7 +7,10 @@ import '../../../../common_widgets/custom_sign_in_or_sign_up.dart';
 import '../../../../common_widgets/custom_text_field.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+
+  SignUpPage({super.key});
+
+  final controller = SignUpController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,30 +44,36 @@ class SignUpPage extends StatelessWidget {
                   children: [
                     _imageUser(context),
                   const SizedBox( height: 30,),
-                    const CustomTextField(
+                     CustomTextField(
+                      controller: controller.emailController,
                       hintText: 'Email',
                       icon: Icons.email,
                       textInputType: TextInputType.emailAddress,
                     ),
-                    const CustomTextField(
+                     CustomTextField(
+                      controller: controller.firdtNameController,
                       hintText: 'First Name',
                       icon: Icons.person,
                     ), 
-                    const CustomTextField(
+                     CustomTextField(
+                      controller: controller.lastNameController,
                       hintText: 'Last Name',
                       icon: Icons.person_outlined,
                     ),
-                    const CustomTextField(
+                     CustomTextField(
+                      controller: controller.phoneController,
                       hintText: 'Phone',
                       icon: Icons.phone,
                       textInputType: TextInputType.phone,
                     ),
-                    const CustomTextField(
+                     CustomTextField(
+                      controller: controller.passwordController,
                       hintText: 'Password',
                       icon: Icons.lock,
                       isSecret: true,
                     ),
-                     const CustomTextField(
+                      CustomTextField(
+                      controller: controller.confirmPasswordController,
                       hintText: 'Confirm Password',
                       icon: Icons.lock,
                       isSecret: true,
@@ -102,7 +112,7 @@ class SignUpPage extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () => controller.SignUp(),
         style: ElevatedButton.styleFrom(
             backgroundColor: MyColors.primaryColor,
             shape:

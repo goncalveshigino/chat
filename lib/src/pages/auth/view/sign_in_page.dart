@@ -1,13 +1,17 @@
+import 'package:chat/src/pages/auth/controller/sign_in_controller.dart';
 import 'package:chat/src/pages_routes/page_routes.dart';
 import 'package:chat/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../common_widgets/custom_sign_in_or_sign_up.dart';
-import '../../../../common_widgets/custom_text_field.dart';
+import '../../../../../common_widgets/custom_sign_in_or_sign_up.dart';
+import '../../../../../common_widgets/custom_text_field.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+
+  SignInPage({super.key});
+
+  final controller = SignInController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +34,14 @@ class SignInPage extends StatelessWidget {
               child: Column(
                 children: [
                   _imageBanner(context),
-                  const CustomTextField(
+                   CustomTextField(
+                    controller: controller.emailController,
                     hintText: 'Email',
                     icon: Icons.email,
                     textInputType: TextInputType.emailAddress,
                   ),
-                  const CustomTextField(
+                   CustomTextField(
+                    controller: controller.passwordController,
                     hintText: 'Password',
                     icon: Icons.lock,
                     isSecret: true,
@@ -73,16 +79,7 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  Widget _textLogin() {
-    return const Text(
-      'SignIn',
-      style: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-        fontSize: 22,
-      ),
-    );
-  }
+ 
 
   Widget _circleLogin() {
     return Container(
@@ -100,7 +97,7 @@ class SignInPage extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () => controller.SignIn(),
         style: ElevatedButton.styleFrom(
             backgroundColor: MyColors.primaryColor,
             shape:
@@ -113,25 +110,7 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  Widget _textFieldPassword() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-      decoration: BoxDecoration(
-          color: MyColors.primaryOpacityColor,
-          borderRadius: BorderRadius.circular(30)),
-      child: TextField(
-        decoration: InputDecoration(
-            hintText: 'Password',
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.all(15),
-            hintStyle: TextStyle(color: MyColors.primaryColorDark),
-            prefixIcon: Icon(
-              Icons.lock,
-              color: MyColors.primaryColor,
-            )),
-      ),
-    );
-  }
+
 
   Widget _imageBanner(BuildContext context) {
     return Container(

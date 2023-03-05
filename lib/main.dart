@@ -2,9 +2,12 @@ import 'package:chat/src/pages_routes/page_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'src/pages/auth/controller/sign_in_controller.dart';
 
 void main() {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Get.put(SignInController());
 
   runApp(const MyApp());
 }
@@ -21,7 +24,7 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.pages,
       navigatorKey: Get.key,
       theme: ThemeData(
-         primarySwatch: Colors.red,
+        primarySwatch: Colors.red,
       ),
     );
   }
