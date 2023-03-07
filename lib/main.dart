@@ -1,8 +1,9 @@
+import 'package:chat/src/pages/auth/controller/sign_in_controller.dart';
 import 'package:chat/src/pages_routes/page_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'src/pages/auth/controller/sign_in_controller.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

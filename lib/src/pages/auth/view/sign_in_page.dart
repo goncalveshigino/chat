@@ -1,15 +1,17 @@
+import 'package:chat/src/services/validatores.dart';
 import 'package:chat/src/pages/auth/controller/sign_in_controller.dart';
 import 'package:chat/src/pages_routes/page_routes.dart';
 import 'package:chat/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../common_widgets/custom_sign_in_or_sign_up.dart';
-import '../../../../../common_widgets/custom_text_field.dart';
+import '../../../common_widgets/custom_sign_in_or_sign_up.dart';
+import '../../../common_widgets/custom_text_field.dart';
 
 class SignInPage extends StatelessWidget {
-
   SignInPage({super.key});
+
+  final _formKey = GlobalKey<FormState>();
 
   final controller = SignInController();
 
@@ -31,46 +33,51 @@ class SignInPage extends StatelessWidget {
               child: CustumSignInOrSignUp(text: 'SignIn'),
             ),
             SingleChildScrollView(
-              child: Column(
-                children: [
-                  _imageBanner(context),
-                   CustomTextField(
-                    controller: controller.emailController,
-                    hintText: 'Email',
-                    icon: Icons.email,
-                    textInputType: TextInputType.emailAddress,
-                  ),
-                   CustomTextField(
-                    controller: controller.passwordController,
-                    hintText: 'Password',
-                    icon: Icons.lock,
-                    isSecret: true,
-                  ),
-                  _bottonLogin(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Nao tem uma conta?',
-                        style: TextStyle(color: MyColors.primaryColor),
-                      ),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          'Cadastra-se',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: MyColors.primaryColor),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    _imageBanner(context),
+                    CustomTextField(
+                      controller: controller.emailController,
+                      hintText: 'Email',
+                      icon: Icons.email,
+                      textInputType: TextInputType.emailAddress,
+                      validator: emailValidatores,
+                    ),
+                    CustomTextField(
+                      controller: controller.passwordController,
+                      hintText: 'Password',
+                      icon: Icons.lock,
+                      isSecret: true,
+                      validator: passwordValidator,
+                    ),
+                    _bottonLogin(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Nao tem uma conta?',
+                          style: TextStyle(color: MyColors.primaryColor),
                         ),
-                        onTap: () {
-                          Get.toNamed(PagesRoutes.signUpRoute);
-                        },
-                      )
-                    ],
-                  ),
-                ],
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            'Cadastra-se',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: MyColors.primaryColor),
+                          ),
+                          onTap: () {
+                            Get.toNamed(PagesRoutes.signUpRoute);
+                          },
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -78,8 +85,6 @@ class SignInPage extends StatelessWidget {
       ),
     );
   }
-
- 
 
   Widget _circleLogin() {
     return Container(
@@ -97,7 +102,11 @@ class SignInPage extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       child: ElevatedButton(
-        onPressed: () => controller.SignIn(),
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            controller.signIn();
+          }
+        },
         style: ElevatedButton.styleFrom(
             backgroundColor: MyColors.primaryColor,
             shape:
@@ -109,8 +118,6 @@ class SignInPage extends StatelessWidget {
       ),
     );
   }
-
-
 
   Widget _imageBanner(BuildContext context) {
     return Container(
