@@ -16,7 +16,10 @@ class UsersProvider extends GetConnect {
   //   return response;
   // }
 
-  Future<ResponseApi> singnIn(String email, String password) async {
+  Future<ResponseApi> singnIn(
+     String email,
+     String password,
+  ) async {
     Response response = await post(Endpoints.singnIn, {
       'email': email,
       'password': password,

@@ -44,7 +44,6 @@ class SignInPage extends StatelessWidget {
                       icon: Icons.email,
                       textInputType: TextInputType.emailAddress,
                       validator: emailValidatores,
-                      
                     ),
                     CustomTextField(
                       controller: controller.passwordController,
