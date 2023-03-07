@@ -1,3 +1,4 @@
+import 'package:chat/src/models/response_api.dart';
 import 'package:chat/src/models/user_model.dart';
 import 'package:chat/src/providers/users_providers.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class SignUpController extends GetxController {
 
   UsersProvider usersProvider = UsersProvider();
 
-  void SignUp() async {
+  void signUp() async {
     String email = emailController.text.trim();
     String firstname = firstNameController.text;
     String lastName = lastNameController.text;
@@ -36,13 +37,13 @@ class SignUpController extends GetxController {
           phone: phone,
           password: password);
 
-      Response response = await usersProvider.createUser(user);
+      ResponseApi response = await usersProvider.createUser(user);
 
-      if (response.body['success'] == true) {
+      if (response.success == true) {
         clearForm();
       }
 
-      print('Respose: ${response.body}');
+      print('Respose: ${response.data}');
     }
   }
 

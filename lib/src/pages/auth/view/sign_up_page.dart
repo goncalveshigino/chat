@@ -121,7 +121,7 @@ class SignUpPage extends StatelessWidget {
         onPressed: () {
 
           if (_formKey.currentState!.validate()) {
-            controller.SignUp();
+            controller.signUp();
           }
           
         },
