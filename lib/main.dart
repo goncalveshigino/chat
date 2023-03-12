@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Chat App Flutter',
       initialRoute:
-          myUser.id != null ? PagesRoutes.homeRoute : PagesRoutes.signInRoute,
+          myUser.id != null ? PagesRoutes.baseRoute : PagesRoutes.signInRoute,
       getPages: AppPages.pages,
       navigatorKey: Get.key,
       theme: ThemeData(

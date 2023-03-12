@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
+  
   TextEditingController emailController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -14,7 +15,7 @@ class SignUpController extends GetxController {
 
   UsersProvider usersProvider = UsersProvider();
 
-  void signUp() async {
+  void createUser() async {
     String email = emailController.text.trim();
     String firstname = firstNameController.text;
     String lastName = lastNameController.text;

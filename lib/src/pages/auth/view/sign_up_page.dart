@@ -7,6 +7,7 @@ import '../../../common_widgets/custom_sign_in_or_sign_up.dart';
 import '../../../common_widgets/custom_text_field.dart';
 
 class SignUpPage extends StatelessWidget {
+  
   SignUpPage({super.key});
 
   final _formKey = GlobalKey<FormState>();
@@ -121,7 +122,7 @@ class SignUpPage extends StatelessWidget {
         onPressed: () {
 
           if (_formKey.currentState!.validate()) {
-            controller.signUp();
+            controller.createUser();
           }
           
         },

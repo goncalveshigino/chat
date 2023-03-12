@@ -17,18 +17,21 @@ class SignInController extends GetxController {
   GetStorage storage = GetStorage();
 
   void signIn() async {
+
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
     if (email.isNotEmpty && password.isNotEmpty) {
-      ResponseApi responseApi = await usersProvider.singnIn(email, password);
+
+      ResponseApi responseApi = await usersProvider.signIn(email, password);
 
       if (responseApi.success == true) {
 
         UserModel user = UserModel.fromJson(responseApi.data);
+
         storage.write('user', user.toJson());
       
-        Get.toNamed(PagesRoutes.homeRoute);
+        Get.toNamed(PagesRoutes.baseRoute);
 
 
       } else {
@@ -40,4 +43,6 @@ class SignInController extends GetxController {
 
 
   }
+
+  
 }
