@@ -1,6 +1,5 @@
 import 'package:chat/src/pages/base/base_screen.dart';
 import 'package:chat/src/pages/base/binding/navigation_binding.dart';
-import 'package:chat/src/pages/home/view/home_page.dart';
 import 'package:get/get.dart';
 
 import '../pages/auth/view/sign_in_page.dart';
