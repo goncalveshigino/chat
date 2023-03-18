@@ -1,6 +1,7 @@
-import 'package:chat/src/pages/base/controller/navigation_controller.dart';
 import 'package:get/get.dart';
 
+
+import '../controller/navigation_controller.dart';
 
 class NavigationBinding extends Bindings {
   @override

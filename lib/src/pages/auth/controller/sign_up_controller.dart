@@ -1,11 +1,13 @@
+import 'dart:io';
+
 import 'package:chat/src/models/response_api.dart';
 import 'package:chat/src/models/user_model.dart';
 import 'package:chat/src/providers/users_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignUpController extends GetxController {
-  
   TextEditingController emailController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -14,6 +16,9 @@ class SignUpController extends GetxController {
   TextEditingController confirmPasswordController = TextEditingController();
 
   UsersProvider usersProvider = UsersProvider();
+
+  final ImagePicker picker = ImagePicker();
+  File? imageFile;
 
   void createUser() async {
     String email = emailController.text.trim();
@@ -43,9 +48,46 @@ class SignUpController extends GetxController {
       if (response.success == true) {
         clearForm();
       }
-
-      print('Respose: ${response.data}');
     }
+  }
+
+  Future selectImages(ImageSource imageSource) async {
+    final XFile? image = await picker.pickImage(source: imageSource);
+
+    if (image != null) {
+      imageFile = File(image.path);
+      update();
+    }
+  }
+
+  void showAlertDialog(BuildContext context) {
+    
+    Widget galleryButtons = ElevatedButton(
+      onPressed: () {
+        selectImages(ImageSource.gallery);
+        Get.back();
+      },
+      child: const Text('Galeria'),
+    );
+    Widget cameraButtons = ElevatedButton(
+      onPressed: () {
+        selectImages(ImageSource.camera);
+        Get.back();
+      },
+      child: const Text('Camera'),
+    );
+
+    AlertDialog alertDialog = AlertDialog(
+      title: const Text('Selecione uma imagem'),
+      actions: [galleryButtons, cameraButtons],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      },
+    );
   }
 
   void clearForm() {

@@ -1,11 +1,9 @@
-import 'package:chat/src/pages/base/controller/navigation_controller.dart';
 import 'package:chat/src/pages/chats/chats_page.dart';
 import 'package:chat/src/pages/profile/profile_page.dart';
 import 'package:chat/src/pages/users/users_page.dart';
-import 'package:chat/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'controller/navigation_controller.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
@@ -36,7 +34,7 @@ class _BaseScreenState extends State<BaseScreen> {
             navigationController.navigationPageView(index);
           },
           type: BottomNavigationBarType.fixed,
-          backgroundColor: MyColors.primaryColor,
+          backgroundColor: Colors.green,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white.withAlpha(100),
           items: const [
@@ -48,11 +46,11 @@ class _BaseScreenState extends State<BaseScreen> {
               icon: Icon(Icons.person),
               label: 'Users',
             ),
+           
             BottomNavigationBarItem(
               icon: Icon(Icons.person_pin_rounded),
               label: 'Perfil',
             ),
-           
           ],
         ),
       ),

@@ -50,4 +50,9 @@ class UserModel {
         image: map['image'],
         isVailable: map['isVailable'],
       );
+
+  @override
+  String toString() {
+    return 'UserModel(id: $id, email: $email, firstname: $firstname, lastname: $lastname, phone: $phone, password: $password, sessionToken: $sessionToken, image: $image, isVailable: $isVailable)';
+  }
 }

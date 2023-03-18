@@ -9,6 +9,7 @@ import '../../../common_widgets/custom_sign_in_or_sign_up.dart';
 import '../../../common_widgets/custom_text_field.dart';
 
 class SignInPage extends StatelessWidget {
+  
   SignInPage({super.key});
 
   final _formKey = GlobalKey<FormState>();

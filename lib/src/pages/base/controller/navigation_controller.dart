@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 abstract class NavigationTabs {
 
   static const int chat = 0;
-  static const int users = 1;
+  static const int user = 1;
   static const int profile = 2;
 
 }

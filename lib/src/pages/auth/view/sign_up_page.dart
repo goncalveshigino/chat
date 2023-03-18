@@ -7,12 +7,11 @@ import '../../../common_widgets/custom_sign_in_or_sign_up.dart';
 import '../../../common_widgets/custom_text_field.dart';
 
 class SignUpPage extends StatelessWidget {
-  
   SignUpPage({super.key});
 
   final _formKey = GlobalKey<FormState>();
 
-  final SignUpController controller = SignUpController();
+  final controller = SignUpController();
 
   @override
   Widget build(BuildContext context) {
@@ -120,17 +119,16 @@ class SignUpPage extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       child: ElevatedButton(
         onPressed: () {
-
           if (_formKey.currentState!.validate()) {
             controller.createUser();
           }
-          
         },
         style: ElevatedButton.styleFrom(
-            backgroundColor: MyColors.primaryColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            padding: const EdgeInsets.symmetric(vertical: 15)),
+          backgroundColor: MyColors.primaryColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          padding: const EdgeInsets.symmetric(vertical: 15),
+        ),
         child: const Text(
           'Entrar',
         ),
@@ -139,10 +137,18 @@ class SignUpPage extends StatelessWidget {
   }
 
   Widget _imageUser(BuildContext context) {
-    return CircleAvatar(
-      backgroundImage: const AssetImage('assets/img/user_profile_2.png'),
-      radius: 60,
-      backgroundColor: Colors.grey[300],
+    return GestureDetector(
+      onTap: () => controller.showAlertDialog(context),
+      child: GetBuilder<SignUpController>(
+        builder: (value) => CircleAvatar(
+          backgroundImage: controller.imageFile != null
+              ? FileImage(controller.imageFile!)
+              : const AssetImage('assets/img/user_profile_2.png')
+                  as ImageProvider,
+          radius: 60,
+          backgroundColor: Colors.grey[300],
+        ),
+      ),
     );
   }
 }

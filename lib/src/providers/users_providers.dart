@@ -22,12 +22,12 @@ class UsersProvider extends GetConnect {
     String email,
     String password,
   ) async {
-    Response response = await post(Endpoints.singnIn, {
-      'email': email,
-      'password': password,
-    }, headers: {
-      'Content-Type': 'Application/json',
-    });
+
+    final response = await _httpManager.restRequest(
+      url: Endpoints.singnIn,
+      method: HttpMethods.post,
+      body: {'email': email, 'password': password},
+    );
 
     if (response.body == null) {
       Get.snackbar('Error', 'Por favor tente novamente');
@@ -37,27 +37,23 @@ class UsersProvider extends GetConnect {
     ResponseApi responseApi = ResponseApi.fromMap(response.body);
 
     return responseApi;
+
+    // Response response = await post(Endpoints.singnIn, {
+    //   'email': email,
+    //   'password': password,
+    // }, headers: {
+    //   'Content-Type': 'Application/json',
+    // });
+
+    // if (response.body == null) {
+    //   Get.snackbar('Error', 'Por favor tente novamente');
+    //   return ResponseApi();
+    // }
+
+    // ResponseApi responseApi = ResponseApi.fromMap(response.body);
+
+    // return responseApi;
   }
-
-  // Future<ResponseApi> Login(
-  //   String email,
-  //   String password,
-  // ) async {
-  //  final  response = await _httpManager.restRequest(
-  //     url: Endpoints.singnIn,
-  //     method: HttpMethods.post,
-  //     body: {'email': email, 'password': password},
-  //   );
-
-  //   if (response.body == null) {
-  //     Get.snackbar('Error', 'Por favor tente novamente');
-  //     return ResponseApi();
-  //   }
-
-  //   ResponseApi responseApi = ResponseApi.fromMap(response.body);
-
-  //   return responseApi;
-  // }
 
   Future<ResponseApi> createUser(UserModel user) async {
     Response response = await post(

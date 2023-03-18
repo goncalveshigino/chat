@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfilePage extends StatelessWidget {
+  
   ProfilePage({super.key});
 
   final controller = Get.put(ProfileController());
@@ -24,7 +25,7 @@ class ProfilePage extends StatelessWidget {
                 'Nome do usuario',
                 '${controller.user.firstname!} ${controller.user.lastname!}',
                 Icons.person),
-            userInfo('Email', controller.user.email?? '', Icons.email),
+            userInfo('Email', controller.user.email!, Icons.email),
             userInfo('Telefone', controller.user.phone!, Icons.phone),
           ],
         ),
@@ -54,8 +55,7 @@ class ProfilePage extends StatelessWidget {
             child: FadeInImage.assetNetwork(
               fit: BoxFit.cover,
               placeholder: 'assets/img/user_profile_2.png',
-              image:
-                  'https://st.depositphotos.com/2818715/5102/i/600/depositphotos_51026865-stock-photo-serious-and-pensive-isolated-young.jpg',
+              image:  'https://st.depositphotos.com/2818715/5102/i/600/depositphotos_51026865-stock-photo-serious-and-pensive-isolated-young.jpg',
             ),
           ),
         ),
