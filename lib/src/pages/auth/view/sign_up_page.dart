@@ -83,7 +83,7 @@ class SignUpPage extends StatelessWidget {
                         icon: Icons.lock,
                         isSecret: true,
                       ),
-                      _bottonLogin(),
+                      _bottonLogin(context),
                     ],
                   ),
                 ),
@@ -113,14 +113,14 @@ class SignUpPage extends StatelessWidget {
     );
   }
 
-  Widget _bottonLogin() {
+  Widget _bottonLogin(BuildContext context) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       child: ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            controller.createUser();
+            controller.createUser(context);
           }
         },
         style: ElevatedButton.styleFrom(

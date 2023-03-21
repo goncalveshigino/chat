@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 class SignUpController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -26,7 +27,7 @@ class SignUpController extends GetxController {
   final ImagePicker picker = ImagePicker();
   File? imageFile;
 
-  void createUser() async {
+  void createUser(BuildContext context) async {
     String email = emailController.text.trim();
     String firstname = firstNameController.text;
     String lastName = lastNameController.text;
@@ -42,6 +43,9 @@ class SignUpController extends GetxController {
       password,
       confirmPassword,
     )) {
+      ProgressDialog progressDialog = ProgressDialog(context: context);
+      progressDialog.show(max: 100, msg: 'Cadastrando...');
+
       UserModel user = UserModel(
           email: email,
           firstname: firstname,
@@ -53,6 +57,8 @@ class SignUpController extends GetxController {
       stream.listen((res) {
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
+        progressDialog.close();
+
         if (responseApi.success == true) {
           UserModel user = UserModel.fromJson(responseApi.data);
           storage.write('user', user.toJson());
@@ -62,7 +68,7 @@ class SignUpController extends GetxController {
           Get.snackbar('Erro ao criar usuario', responseApi.message!);
         }
       });
-   }
+    }
     //ResponseApi response = await usersProvider.createUser(user);
   }
 
