@@ -4,18 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfilePage extends StatelessWidget {
-  
+
   ProfilePage({super.key});
 
-  final controller = Get.put(ProfileController());
+   final controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => controller.signOut(),
-        backgroundColor: MyColors.primaryColor,
-        child: const Icon(Icons.power_settings_new),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: null,
+            onPressed: () => controller.goToProfileEdit(),
+            backgroundColor: Colors.grey,
+            child: const Icon(Icons.edit),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: () => controller.signOut(),
+            backgroundColor: MyColors.primaryColor,
+            child: const Icon(Icons.power_settings_new),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -55,7 +69,7 @@ class ProfilePage extends StatelessWidget {
             child: FadeInImage.assetNetwork(
               fit: BoxFit.cover,
               placeholder: 'assets/img/user_profile_2.png',
-              image: controller.user.image!
+              image: controller.user.image ?? 'https://cdn-icons-png.flaticon.com/512/16/16480.png',
             ),
           ),
         ),

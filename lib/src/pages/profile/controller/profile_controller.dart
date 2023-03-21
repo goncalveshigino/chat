@@ -6,13 +6,14 @@ import '../../../models/user_model.dart';
 
 class ProfileController extends GetxController {
 
+  UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
 
-   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
-
-
-
-   void signOut(){
+  void signOut() {
     GetStorage().remove('user');
     Get.offNamedUntil(PagesRoutes.signInRoute, (route) => false);
-   }
-} 
+  }
+
+  void goToProfileEdit() {
+    Get.toNamed(PagesRoutes.profileEdit);
+  }
+}

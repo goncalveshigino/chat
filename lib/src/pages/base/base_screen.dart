@@ -23,8 +23,8 @@ class _BaseScreenState extends State<BaseScreen> {
         physics: const NeverScrollableScrollPhysics(),
         controller: navigationController.pageController,
         children:  [
-          ChatsPage(),
-          UsersPage(),
+         const ChatsPage(),
+         const UsersPage(),
           ProfilePage(),
         ],
       ),

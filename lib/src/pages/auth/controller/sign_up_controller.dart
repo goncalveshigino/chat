@@ -44,6 +44,7 @@ class SignUpController extends GetxController {
       confirmPassword,
     )) {
       ProgressDialog progressDialog = ProgressDialog(context: context);
+
       progressDialog.show(max: 100, msg: 'Cadastrando...');
 
       UserModel user = UserModel(
@@ -55,11 +56,13 @@ class SignUpController extends GetxController {
 
       Stream stream = await usersProvider.createWithImage(user, imageFile!);
       stream.listen((res) {
+
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
         progressDialog.close();
 
         if (responseApi.success == true) {
+          
           UserModel user = UserModel.fromJson(responseApi.data);
           storage.write('user', user.toJson());
 
