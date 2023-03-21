@@ -11,7 +11,7 @@ class SignUpPage extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final controller = SignUpController();
+  final controller = Get.find<SignUpController>();
 
   @override
   Widget build(BuildContext context) {

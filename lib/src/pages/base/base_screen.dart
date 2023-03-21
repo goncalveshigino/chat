@@ -1,6 +1,7 @@
 import 'package:chat/src/pages/chats/chats_page.dart';
-import 'package:chat/src/pages/profile/profile_page.dart';
+import 'package:chat/src/pages/profile/view/profile_page.dart';
 import 'package:chat/src/pages/users/users_page.dart';
+import 'package:chat/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controller/navigation_controller.dart';
@@ -34,7 +35,7 @@ class _BaseScreenState extends State<BaseScreen> {
             navigationController.navigationPageView(index);
           },
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.green,
+          backgroundColor: MyColors.primaryColor,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white.withAlpha(100),
           items: const [

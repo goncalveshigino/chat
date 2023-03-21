@@ -1,37 +1,32 @@
 import 'dart:convert';
 
+ResponseApi responseApiFromJson(String str) => ResponseApi.fromJson(json.decode(str));
+
+String responseApiToJson(ResponseApi data) => json.encode(data.toJson());
+
 class ResponseApi {
 
-   bool  ? success;
-   String? message;
-   dynamic  data;
+    bool? success;
+    String? message;
+    dynamic data;
+
+    ResponseApi({
+         this.success,
+         this.message,
+         this.data,
+    });
+
    
-  ResponseApi({
-     this.success,
-     this.message,
-     this.data,
-  });
 
-
-  Map<String, dynamic> toMap() {
-    return {
-      'success': success,
-      'message': message,
-      'data': data,
-    };
-  }
-
-  factory ResponseApi.fromMap(Map<String, dynamic> map) {
-    return ResponseApi(
-      success: map['success'] ?? false,
-      message: map['message'] ?? '',
-      data: map['data'] ?? '',
+    factory ResponseApi.fromJson(Map<String, dynamic> json) => ResponseApi(
+        success: json["success"],
+        message: json["message"],
+        data: json["data"],
     );
-  }
 
-  String toJson() => json.encode(toMap());
-
-  factory ResponseApi.fromJson(String source) => ResponseApi.fromMap(json.decode(source));
-
-  
+    Map<String, dynamic> toJson() => {
+        "success": success,
+        "message": message,
+        "data": data,
+    };
 }

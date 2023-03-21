@@ -1,13 +1,14 @@
 
-const String apiChat = "http://192.168.43.135:3000/api/users";
+const String apiChat = "http://192.168.8.101:3000/api/users";
 
 abstract class Endpoints {
    
-  static const String createUser = '$apiChat/createUser';
+ static const String createUser = '$apiChat/createUser';
   static const String singnIn = '$apiChat/singnIn';
 }
 
-// class Environment {
+class Environment {
 
-//     static const String API_CHAT = "http://192.168.43.135:3000/";
-// }
+ 
+   static const String API_OLD_CHAT = "192.168.8.101:3000";
+}

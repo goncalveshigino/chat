@@ -55,7 +55,7 @@ class ProfilePage extends StatelessWidget {
             child: FadeInImage.assetNetwork(
               fit: BoxFit.cover,
               placeholder: 'assets/img/user_profile_2.png',
-              image:  'https://st.depositphotos.com/2818715/5102/i/600/depositphotos_51026865-stock-photo-serious-and-pensive-isolated-young.jpg',
+              image: 'https://st.depositphotos.com/2818715/5102/i/600/depositphotos_51026865-stock-photo-serious-and-pensive-isolated-young.jpg',
             ),
           ),
         ),

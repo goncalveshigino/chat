@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class HttpManager {
 
-  Future restRequest({
+  Future<Map> restRequest({
     required String url,
     required String method,
     Map? hearders,

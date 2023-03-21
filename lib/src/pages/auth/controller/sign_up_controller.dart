@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'dart:core';
 import 'package:chat/src/models/response_api.dart';
 import 'package:chat/src/models/user_model.dart';
+import 'package:chat/src/pages_routes/page_routes.dart';
 import 'package:chat/src/providers/users_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignUpController extends GetxController {
@@ -16,6 +20,8 @@ class SignUpController extends GetxController {
   TextEditingController confirmPasswordController = TextEditingController();
 
   UsersProvider usersProvider = UsersProvider();
+
+  GetStorage storage = GetStorage();
 
   final ImagePicker picker = ImagePicker();
   File? imageFile;
@@ -43,12 +49,21 @@ class SignUpController extends GetxController {
           phone: phone,
           password: password);
 
-      ResponseApi response = await usersProvider.createUser(user);
+      Stream stream = await usersProvider.createWithImage(user, imageFile!);
+      stream.listen((res) {
+        ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
-      if (response.success == true) {
-        clearForm();
-      }
-    }
+        if (responseApi.success == true) {
+          UserModel user = UserModel.fromJson(responseApi.data);
+          storage.write('user', user.toJson());
+
+          goToBaseScreen();
+        } else {
+          Get.snackbar('Erro ao criar usuario', responseApi.message!);
+        }
+      });
+   }
+    //ResponseApi response = await usersProvider.createUser(user);
   }
 
   Future selectImages(ImageSource imageSource) async {
@@ -61,18 +76,17 @@ class SignUpController extends GetxController {
   }
 
   void showAlertDialog(BuildContext context) {
-    
     Widget galleryButtons = ElevatedButton(
       onPressed: () {
-        selectImages(ImageSource.gallery);
         Get.back();
+        selectImages(ImageSource.gallery);
       },
       child: const Text('Galeria'),
     );
     Widget cameraButtons = ElevatedButton(
       onPressed: () {
-        selectImages(ImageSource.camera);
         Get.back();
+        selectImages(ImageSource.camera);
       },
       child: const Text('Camera'),
     );
@@ -148,6 +162,15 @@ class SignUpController extends GetxController {
       return false;
     }
 
+    if (imageFile == null) {
+      Get.snackbar('Formulario Invalido', 'Seleciona uma imagem de perfil');
+      return false;
+    }
+
     return true;
+  }
+
+  void goToBaseScreen() {
+    Get.offNamedUntil(PagesRoutes.baseRoute, (route) => false);
   }
 }

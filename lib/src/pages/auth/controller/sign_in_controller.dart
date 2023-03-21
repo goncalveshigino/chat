@@ -17,32 +17,27 @@ class SignInController extends GetxController {
   GetStorage storage = GetStorage();
 
   void signIn() async {
-
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
     if (email.isNotEmpty && password.isNotEmpty) {
-
       ResponseApi responseApi = await usersProvider.signIn(email, password);
 
       if (responseApi.success == true) {
-
         UserModel user = UserModel.fromJson(responseApi.data);
 
         storage.write('user', user.toJson());
-      
-        Get.toNamed(PagesRoutes.baseRoute);
 
-
+        goToBaseScreen();
       } else {
         Get.snackbar('Erro ao Acessar', 'Sessao nao iniciada');
       }
     } else {
       Get.snackbar('Completar os dados', 'Digite seu email e password');
     }
-
-
   }
 
-  
+  void goToBaseScreen() {
+    Get.offNamedUntil(PagesRoutes.baseRoute, (route) => false);
+  }
 }
