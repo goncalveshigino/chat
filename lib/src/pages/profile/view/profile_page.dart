@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfilePage extends StatelessWidget {
-
   ProfilePage({super.key});
 
-   final controller = Get.put(ProfileController());
+  final controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +30,19 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            circleUser(),
-            userInfo(
-                'Nome do usuario',
-                '${controller.user.firstname!} ${controller.user.lastname!}',
-                Icons.person),
-            userInfo('Email', controller.user.email!, Icons.email),
-            userInfo('Telefone', controller.user.phone!, Icons.phone),
-          ],
-        ),
-      ),
+      body: Obx(() => SafeArea(
+            child: Column(
+              children: [
+                circleUser(),
+                userInfo(
+                    'Nome do usuario',
+                    '${controller.user.value.firstname!} ${controller.user.value.lastname!}',
+                    Icons.person),
+                userInfo('Email', controller.user.value.email!, Icons.email),
+                userInfo('Telefone', controller.user.value.phone!, Icons.phone),
+              ],
+            ),
+          )),
     );
   }
 
@@ -69,7 +68,8 @@ class ProfilePage extends StatelessWidget {
             child: FadeInImage.assetNetwork(
               fit: BoxFit.cover,
               placeholder: 'assets/img/user_profile_2.png',
-              image: controller.user.image ?? 'https://cdn-icons-png.flaticon.com/512/16/16480.png',
+              image: controller.user.value.image ??
+                  'https://cdn-icons-png.flaticon.com/512/16/16480.png',
             ),
           ),
         ),

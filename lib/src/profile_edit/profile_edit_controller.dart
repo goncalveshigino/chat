@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:chat/src/models/user_model.dart';
+import 'package:chat/src/pages/profile/controller/profile_controller.dart';
 import 'package:chat/src/providers/users_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,7 @@ class ProfileEditController extends GetxController {
   File? imageFile;
 
   UsersProvider usersProvider = UsersProvider();
-
+  final profileController = Get.find<ProfileController>();
 
   ProfileEditController() {
     nameController.text = user.firstname ?? '';
@@ -69,39 +70,62 @@ class ProfileEditController extends GetxController {
   }
 
   void updateUser(BuildContext context) async {
-
     String name = nameController.text;
     String lastname = lastnameController.text;
     String phone = phoneController.text;
 
     UserModel u = UserModel(
-      id: user.id,
-     firstname: name, 
-     lastname: lastname, 
-     phone:phone,
-     email: user.email, 
-     sessionToken: user.sessionToken
+        id: user.id,
+        firstname: name,
+        lastname: lastname,
+        phone: phone,
+        email: user.email,
+        sessionToken: user.sessionToken,
+        image: user.image);
 
-    );
+    ProgressDialog progressDialog = ProgressDialog(context: context);
 
-   ProgressDialog progressDialog = ProgressDialog(context: context);
+    progressDialog.show(max: 100, msg: 'Atualizando...');
 
-      progressDialog.show(max: 100, msg: 'Atualizando...');
-
-    Stream stream = await usersProvider.updateWithImage(u, imageFile!);
-    stream.listen((res) {
-      ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+    if (imageFile == null) {
+      ResponseApi responseApi = await usersProvider.update(u);
 
       progressDialog.close();
 
-      if (responseApi.success == true) {
-        UserModel user = UserModel.fromJson(responseApi.data);
-        GetStorage().write('user', user.toJson());
+      print('Usuario Atualizado ${responseApi.data}');
 
-    
+      if (responseApi.success == true) {
+        UserModel userResponse = UserModel.fromJson(responseApi.data);
+        profileController.user.value = userResponse;
+        GetStorage().write('user', userResponse.toJson());
+
+        Get.snackbar('Usuario Atualizado', responseApi.message!);
       } else {
         Get.snackbar('Erro ao atualizar usuario', responseApi.message!);
       }
-    });
+    } else {
+      Stream stream = await usersProvider.updateWithImage(u, imageFile!);
+      stream.listen(
+        (res) {
+          ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+
+          progressDialog.close();
+
+          print('Usuario Atualizado ${responseApi.data}');
+
+          if (responseApi.success == true) {
+
+            UserModel userResponse = UserModel.fromJson(responseApi.data);
+            GetStorage().write('user', userResponse.toJson());
+            profileController.user.value = userResponse;
+            Get.snackbar('Usuario Atualizado', responseApi.message!);
+
+          } else {
+            Get.snackbar('Erro ao atualizar usuario', responseApi.message!);
+          }
+        },
+      );
+    }
+    
   }
 }

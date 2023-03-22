@@ -52,6 +52,26 @@ class UsersProvider extends GetConnect {
     return responseApi;
   }
 
+
+   Future<ResponseApi> update(UserModel user) async {
+    Response response = await put(
+      Endpoints.update,
+      user.toJson(),
+      headers: {
+        'Content-Type': 'Application/json',
+      },
+    );
+
+    if (response.body == null) {
+      Get.snackbar('Error', 'Erro ao atualizar usuario');
+      return ResponseApi();
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+
+    return responseApi;
+  }
+
 //------------------------------------
   Future<Stream> createWithImage(UserModel user, File image) async {
     Uri uri = Uri.http(Environment.API_OLD_CHAT, '/api/users/createUser');

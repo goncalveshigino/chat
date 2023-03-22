@@ -6,7 +6,7 @@ import '../../../models/user_model.dart';
 
 class ProfileController extends GetxController {
 
-  UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
+  final user = UserModel.fromJson(GetStorage().read('user') ?? {}).obs;
 
   void signOut() {
     GetStorage().remove('user');
