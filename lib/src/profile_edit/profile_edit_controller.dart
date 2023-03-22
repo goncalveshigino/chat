@@ -92,17 +92,8 @@ class ProfileEditController extends GetxController {
 
       progressDialog.close();
 
-      print('Usuario Atualizado ${responseApi.data}');
+      saveSession(responseApi);
 
-      if (responseApi.success == true) {
-        UserModel userResponse = UserModel.fromJson(responseApi.data);
-        profileController.user.value = userResponse;
-        GetStorage().write('user', userResponse.toJson());
-
-        Get.snackbar('Usuario Atualizado', responseApi.message!);
-      } else {
-        Get.snackbar('Erro ao atualizar usuario', responseApi.message!);
-      }
     } else {
       Stream stream = await usersProvider.updateWithImage(u, imageFile!);
       stream.listen(
@@ -111,21 +102,23 @@ class ProfileEditController extends GetxController {
 
           progressDialog.close();
 
-          print('Usuario Atualizado ${responseApi.data}');
-
-          if (responseApi.success == true) {
-
-            UserModel userResponse = UserModel.fromJson(responseApi.data);
-            GetStorage().write('user', userResponse.toJson());
-            profileController.user.value = userResponse;
-            Get.snackbar('Usuario Atualizado', responseApi.message!);
-
-          } else {
-            Get.snackbar('Erro ao atualizar usuario', responseApi.message!);
-          }
+          saveSession(responseApi);
         },
       );
     }
-    
+  }
+
+  void saveSession(dynamic responseApi) {
+
+    print('Usuario Atualizado ${responseApi.data}');
+
+    if (responseApi.success == true) {
+      UserModel userResponse = UserModel.fromJson(responseApi.data);
+      GetStorage().write('user', userResponse.toJson());
+      profileController.user.value = userResponse;
+      Get.snackbar('Usuario Atualizado', responseApi.message!);
+    } else {
+      Get.snackbar('Erro ao atualizar usuario', responseApi.message!);
+    }
   }
 }
