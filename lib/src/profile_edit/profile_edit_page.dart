@@ -54,7 +54,7 @@ class ProfileEditPage extends StatelessWidget {
       height: 50,
       margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () => controller.updateUser(context),
         style: ElevatedButton.styleFrom(
           backgroundColor: MyColors.primaryColor,
           shape:

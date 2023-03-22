@@ -1,24 +1,30 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:chat/src/models/user_model.dart';
+import 'package:chat/src/providers/users_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
+
+import '../models/response_api.dart';
 
 class ProfileEditController extends GetxController {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-
 
   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
 
   final ImagePicker picker = ImagePicker();
   File? imageFile;
 
-  ProfileEditController(){
+  UsersProvider usersProvider = UsersProvider();
+
+
+  ProfileEditController() {
     nameController.text = user.firstname ?? '';
     lastnameController.text = user.lastname ?? '';
     phoneController.text = user.phone ?? '';
@@ -60,5 +66,42 @@ class ProfileEditController extends GetxController {
         return alertDialog;
       },
     );
+  }
+
+  void updateUser(BuildContext context) async {
+
+    String name = nameController.text;
+    String lastname = lastnameController.text;
+    String phone = phoneController.text;
+
+    UserModel u = UserModel(
+      id: user.id,
+     firstname: name, 
+     lastname: lastname, 
+     phone:phone,
+     email: user.email, 
+     sessionToken: user.sessionToken
+
+    );
+
+   ProgressDialog progressDialog = ProgressDialog(context: context);
+
+      progressDialog.show(max: 100, msg: 'Atualizando...');
+
+    Stream stream = await usersProvider.updateWithImage(u, imageFile!);
+    stream.listen((res) {
+      ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+
+      progressDialog.close();
+
+      if (responseApi.success == true) {
+        UserModel user = UserModel.fromJson(responseApi.data);
+        GetStorage().write('user', user.toJson());
+
+    
+      } else {
+        Get.snackbar('Erro ao atualizar usuario', responseApi.message!);
+      }
+    });
   }
 }

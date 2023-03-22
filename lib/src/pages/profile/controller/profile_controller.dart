@@ -16,4 +16,6 @@ class ProfileController extends GetxController {
   void goToProfileEdit() {
     Get.toNamed(PagesRoutes.profileEdit);
   }
+
+ 
 }

@@ -8,7 +8,5 @@ abstract class Endpoints {
 }
 
 class Environment {
-
- 
    static const String API_OLD_CHAT = "192.168.8.101:3000";
 }

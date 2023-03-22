@@ -70,6 +70,24 @@ class UsersProvider extends GetConnect {
     return response.stream.transform(utf8.decoder);
   }
 
+
+    Future<Stream> updateWithImage(UserModel user, File image) async {
+    Uri uri = Uri.http(Environment.API_OLD_CHAT, '/api/users/updateWithImage');
+
+    final request = http.MultipartRequest('PUT', uri);
+
+    request.files.add(
+      http.MultipartFile(
+        'image',
+        http.ByteStream(image.openRead().cast()),
+        await image.length(),
+        filename: basename(image.path),
+      ));
+    request.fields['user'] = json.encode(user);
+    final response = await request.send();
+    return response.stream.transform(utf8.decoder);
+  }
+
 //-----------------------------------------
 
   Future<ResponseApi> createUserWithImage(UserModel user, File image) async {
