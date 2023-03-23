@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final userModel = userModelFromJson(jsonString);
+
 import 'dart:convert';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
@@ -5,54 +9,54 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
-  String? id;
-  String? email;
-  String? firstname;
-  String? lastname;
-  String? phone;
-  String? password;
-  String? sessionToken;
-  String? image;
-  String? isVailable;
 
-  UserModel({
-    this.id,
-    this.email,
-    this.firstname,
-    this.lastname,
-    this.phone,
-    this.password,
-    this.sessionToken,
-    this.image,
-    this.isVailable,
-  });
+    String? id;
+    String? email;
+    String? firstname;
+    String? lastname;
+    String? phone;
+    String? image;
+    String? password;
+    String? sessionToken;
+    String? isAvailable;
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'email': email,
-        'firstname': firstname,
-        'lastname': lastname,
-        'phone': phone,
-        'password': password,
-        'sessionToken': sessionToken,
-        'image': image,
-        'isVailable': isVailable,
-      };
 
-  factory UserModel.fromJson(Map<String, dynamic> map) => UserModel(
-        id: map['id'],
-        email: map['email'],
-        firstname: map['firstname'],
-        lastname: map['lastname'],
-        phone: map['phone'],
-        password: map['password'],
-        sessionToken: map['sessionToken'],
-        image: map['image'],
-        isVailable: map['isVailable'],
-      );
 
-  @override
-  String toString() {
-    return 'UserModel(id: $id, email: $email, firstname: $firstname, lastname: $lastname, phone: $phone, password: $password, sessionToken: $sessionToken, image: $image, isVailable: $isVailable)';
-  }
+    UserModel({
+         this.id,
+         this.email,
+         this.firstname,
+         this.lastname,
+         this.phone,
+         this.image,
+         this.password,
+         this.sessionToken,
+         this.isAvailable,
+    });
+
+   
+
+    factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        id: json["id"],
+        email: json["email"],
+        firstname: json["firstname"],
+        lastname: json["lastname"],
+        phone: json["phone"],
+        image: json["image"],
+        password: json["password"],
+        sessionToken: json["session_token"],
+        isAvailable: json["is_available"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "email": email,
+        "firstname": firstname,
+        "lastname": lastname,
+        "phone": phone,
+        "image": image,
+        "password": password,
+        "session_token": sessionToken,
+        "is_available": isAvailable,
+    };
 }

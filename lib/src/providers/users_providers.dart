@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:chat/src/models/response_api.dart';
 import 'package:get/get.dart';
 import 'package:chat/src/api/endpoints.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../models/user_model.dart';
 import 'package:path/path.dart';
 
 class UsersProvider extends GetConnect {
 
-
-
+  UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
 
   Future<ResponseApi> signIn(
     String email,
@@ -29,9 +29,11 @@ class UsersProvider extends GetConnect {
     }
 
     ResponseApi responseApi = ResponseApi.fromJson(response.body);
-
+  
     return responseApi;
   }
+
+
 
   Future<ResponseApi> createUser(UserModel user) async {
     Response response = await post(
@@ -52,13 +54,13 @@ class UsersProvider extends GetConnect {
     return responseApi;
   }
 
-
-   Future<ResponseApi> update(UserModel user) async {
+  Future<ResponseApi> update(UserModel user) async {
     Response response = await put(
       Endpoints.update,
       user.toJson(),
       headers: {
         'Content-Type': 'Application/json',
+        'Authorization': user.sessionToken!
       },
     );
 
@@ -78,31 +80,29 @@ class UsersProvider extends GetConnect {
 
     final request = http.MultipartRequest('POST', uri);
 
-    request.files.add(
-      http.MultipartFile(
-        'image',
-        http.ByteStream(image.openRead().cast()),
-        await image.length(),
-        filename: basename(image.path),
-      ));
+    request.files.add(http.MultipartFile(
+      'image',
+      http.ByteStream(image.openRead().cast()),
+      await image.length(),
+      filename: basename(image.path),
+    ));
     request.fields['user'] = json.encode(user);
     final response = await request.send();
     return response.stream.transform(utf8.decoder);
   }
 
-
-    Future<Stream> updateWithImage(UserModel user, File image) async {
+  Future<Stream> updateWithImage(UserModel user, File image) async {
     Uri uri = Uri.http(Environment.API_OLD_CHAT, '/api/users/updateWithImage');
 
     final request = http.MultipartRequest('PUT', uri);
+    request.headers['Authorization'] = user.sessionToken!;
 
-    request.files.add(
-      http.MultipartFile(
-        'image',
-        http.ByteStream(image.openRead().cast()),
-        await image.length(),
-        filename: basename(image.path),
-      ));
+    request.files.add(http.MultipartFile(
+      'image',
+      http.ByteStream(image.openRead().cast()),
+      await image.length(),
+      filename: basename(image.path),
+    ));
     request.fields['user'] = json.encode(user);
     final response = await request.send();
     return response.stream.transform(utf8.decoder);

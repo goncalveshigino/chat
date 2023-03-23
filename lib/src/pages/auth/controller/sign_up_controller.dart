@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 class SignUpController extends GetxController {
+  
   TextEditingController emailController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -64,9 +65,10 @@ class SignUpController extends GetxController {
         if (responseApi.success == true) {
           
           UserModel user = UserModel.fromJson(responseApi.data);
+
           storage.write('user', user.toJson());
 
-          goToBaseScreen();
+           goToBaseScreen();
         } else {
           Get.snackbar('Erro ao criar usuario', responseApi.message!);
         }

@@ -8,7 +8,6 @@ import 'package:get_storage/get_storage.dart';
 import '../../../models/response_api.dart';
 
 class SignInController extends GetxController {
-  
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -25,6 +24,8 @@ class SignInController extends GetxController {
 
       if (responseApi.success == true) {
         UserModel user = UserModel.fromJson(responseApi.data);
+
+        print('Response Api:  ${responseApi.toJson()}');
 
         storage.write('user', user.toJson());
 
