@@ -68,7 +68,8 @@ class SignUpController extends GetxController {
 
           storage.write('user', user.toJson());
 
-           goToBaseScreen();
+           goToSignInPage();
+           
         } else {
           Get.snackbar('Erro ao criar usuario', responseApi.message!);
         }
@@ -181,7 +182,7 @@ class SignUpController extends GetxController {
     return true;
   }
 
-  void goToBaseScreen() {
-    Get.offNamedUntil(PagesRoutes.baseRoute, (route) => false);
+  void goToSignInPage() {
+   Get.offNamedUntil(PagesRoutes.signInRoute, (route) => false);;
   }
 }

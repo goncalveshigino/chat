@@ -24,7 +24,7 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: navigationController.pageController,
         children:  [
          const ChatsPage(),
-         const UsersPage(),
+          UsersPage(),
           ProfilePage(),
         ],
       ),

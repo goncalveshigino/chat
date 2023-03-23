@@ -10,7 +10,29 @@ import 'package:path/path.dart';
 
 class UsersProvider extends GetConnect {
 
+  String url = Environment.apiChat + 'api/users';
+
   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
+
+  Future<List<UserModel>> getUsers() async {
+    Response response = await get(
+        '$url/getUsers/${user.id}',
+        //'${Endpoints.getUsers}${user.id}',
+        headers: {
+          'Content-Type': 'Application/json',
+          'Authorization': user.sessionToken!
+        });
+
+    if (response.statusCode == 401) {
+      Get.snackbar('Requicao Negada', 'Usuario sem permissao');
+      return [];
+    }
+
+    List<UserModel> users = UserModel.fromJsonList(response.body);
+
+
+    return users;
+  }
 
   Future<ResponseApi> signIn(
     String email,
@@ -29,11 +51,9 @@ class UsersProvider extends GetConnect {
     }
 
     ResponseApi responseApi = ResponseApi.fromJson(response.body);
-  
+
     return responseApi;
   }
-
-
 
   Future<ResponseApi> createUser(UserModel user) async {
     Response response = await post(
