@@ -16,7 +16,7 @@ class MessagePage extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              margin: const EdgeInsets.only(bottom: 30),
+              margin: const EdgeInsets.only(bottom: 50),
               child: ListView(
                 children: [],
               ),
