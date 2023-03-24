@@ -41,6 +41,7 @@ class UsersPage extends StatelessWidget {
 
   Widget cardUser(UserModel user) {
     return ListTile(
+      onTap: () => controller.goToChat(user),
       title: Text(user.firstname!),
       subtitle: Text(user.email!),
       leading: AspectRatio(

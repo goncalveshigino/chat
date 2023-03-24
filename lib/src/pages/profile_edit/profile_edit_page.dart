@@ -1,9 +1,9 @@
 import 'package:chat/src/common_widgets/custom_text_field.dart';
-import 'package:chat/src/profile_edit/profile_edit_controller.dart';
+import 'package:chat/src/pages/profile_edit/profile_edit_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../utils/my_colors.dart';
+import '../../utils/my_colors.dart';
 
 class ProfileEditPage extends StatelessWidget {
 

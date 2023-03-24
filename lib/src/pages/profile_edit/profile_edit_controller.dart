@@ -10,7 +10,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
-import '../models/response_api.dart';
+import '../../models/response_api.dart';
 
 class ProfileEditController extends GetxController {
   TextEditingController nameController = TextEditingController();
