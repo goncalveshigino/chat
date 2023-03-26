@@ -11,9 +11,29 @@ import '../models/message_model.dart';
 
 class MessageProvider extends GetConnect {
 
-  String url = Environment.apiChat + 'api/chats';
-
+  String url = Environment.apiChat + 'api/messages';
+           
   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
+
+
+  Future<List<MessageModel>> getMessages(String idChat) async {
+    Response response = await get    (
+        '$url/findByChat/$idChat',
+        headers: {
+          'Content-Type': 'Application/json',
+          'Authorization': user.sessionToken!
+        });
+
+    if (response.statusCode == 401) {
+      Get.snackbar('Requicao Negada', 'Usuario sem permissao');
+      return [];
+    }
+
+    List<MessageModel> messages = MessageModel.fromJsonList(response.body);
+
+
+    return messages;
+  }
 
   Future<ResponseApi> createMessage(MessageModel message) async {
     Response response = await post(
@@ -34,5 +54,6 @@ class MessageProvider extends GetConnect {
 
     return responseApi;
   }
+
 
 }

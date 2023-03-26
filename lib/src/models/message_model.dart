@@ -44,8 +44,20 @@ class MessageModel {
         url: json["url"],
         isImage: json["is_image"],
         isVideo: json["is_video"],
-        timestamp: json["timestamp"],
+        timestamp:int.parse(json["timestamp"]) ,
       );
+
+  static List<MessageModel> fromJsonList(List<dynamic> jsonList) {
+    
+    List<MessageModel> toList = [];
+
+    jsonList.forEach((item) {
+      MessageModel message = MessageModel.fromJson(item);
+      toList.add(message);
+    });
+
+    return toList;
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,

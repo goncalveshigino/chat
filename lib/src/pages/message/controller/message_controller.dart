@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class MessageController extends GetxController {
-
   TextEditingController messageController = TextEditingController();
 
   UserModel userChat = UserModel.fromJson(Get.arguments['user']);
@@ -19,6 +18,7 @@ class MessageController extends GetxController {
   MessageProvider messageProvider = MessageProvider();
 
   String idChat = '';
+  List<MessageModel> messages = <MessageModel>[].obs;
 
   MessageController() {
     print('Usuario chat: ${userChat.toJson()}');
@@ -26,12 +26,16 @@ class MessageController extends GetxController {
   }
 
   Future<void> createChat() async {
-    ChatModel chat = ChatModel(idUser1: myUser.id, idUser2: userChat.id);
+    ChatModel chat = ChatModel(
+      idUser1: myUser.id,
+      idUser2: userChat.id,
+    );
 
     ResponseApi responseApi = await chatProvider.create(chat);
 
     if (responseApi.success == true) {
       idChat = responseApi.data as String;
+      getMessage();
     }
   }
 
@@ -58,8 +62,14 @@ class MessageController extends GetxController {
 
     ResponseApi responseApi = await messageProvider.createMessage(message);
 
-    Get.snackbar('Resposta', responseApi.message ?? '');
-    messageController.text = '';
+    if (responseApi.success == true) {
+      messageController.text = '';
+    }
   }
-  
+
+  Future<void> getMessage() async {
+    var result = await messageProvider.getMessages(idChat);
+    messages.clear();
+    messages.addAll(result);
+  }
 }
