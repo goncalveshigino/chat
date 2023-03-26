@@ -49,11 +49,12 @@ class MessagePage extends StatelessWidget {
               icon: const Icon(Icons.video_call_rounded),
             ),
           ),
-          const Expanded(
+           Expanded(
             flex: 10,
             child: TextField(
+              controller:  controller.messageController,
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
+              decoration:const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Escreva tua messagem...',
                   contentPadding:
@@ -63,7 +64,7 @@ class MessagePage extends StatelessWidget {
           Expanded(
             flex: 2,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => controller.sendMessage(),
               icon: const Icon(Icons.send),
             ),
           )
