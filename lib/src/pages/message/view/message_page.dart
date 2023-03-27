@@ -10,8 +10,6 @@ class MessagePage extends StatelessWidget {
 
   final controller = Get.put(MessageController());
 
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
