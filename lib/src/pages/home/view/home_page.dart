@@ -1,12 +1,13 @@
 // import 'package:chat/src/pages/chats/chats_page.dart';
 // import 'package:chat/src/pages/home/controller/home_controller.dart';
-// import 'package:chat/src/pages/profile/profile_page.dart';
+// import 'package:chat/src/pages/profile/view/profile_page.dart';
 // import 'package:chat/src/pages/users/users_page.dart';
 // import 'package:chat/src/utils/my_colors.dart';
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 
 // class HomePage extends StatelessWidget {
+
 //   HomeController controller = Get.put(HomeController());
 
 //   HomePage({super.key});
@@ -17,7 +18,7 @@
 //       bottomNavigationBar: bottomNavigationBar(context),
 //       body: Obx(() => IndexedStack(
 //             index: controller.tabIndex.value,
-//             children: const [
+//             children:  [
 //               ChatsPage(),
 //               UsersPage(),
 //               ProfilePage(),

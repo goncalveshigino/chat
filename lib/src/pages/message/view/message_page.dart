@@ -37,7 +37,7 @@ class MessagePage extends StatelessWidget {
       return Container(
         alignment: message.idSender == myUser.id
             ? Alignment.bottomRight
-            : Alignment.centerLeft,
+            : Alignment.bottomLeft,
         margin: const EdgeInsets.symmetric(horizontal: 20),
         child: bunbleMessage(message),
       );
