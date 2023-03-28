@@ -130,21 +130,21 @@ class UsersProvider extends GetConnect {
 
 //-----------------------------------------
 
-  Future<ResponseApi> createUserWithImage(UserModel user, File image) async {
-    FormData form = FormData({
-      'image': MultipartFile(image, filename: basename(image.path)),
-      'user': json.encode(user),
-    });
+  // Future<ResponseApi> createUserWithImage(UserModel user, File image) async {
+  //   FormData form = FormData({
+  //     'image': MultipartFile(image, filename: basename(image.path)),
+  //     'user': json.encode(user),
+  //   });
 
-    Response response = await post(Endpoints.createUser, form);
+  //   Response response = await post(Endpoints.createUser, form);
 
-    if (response.body == null) {
-      Get.snackbar('Erro na requisicao', 'Nao foi possivel criar usuario');
-      return ResponseApi();
-    }
+  //   if (response.body == null) {
+  //     Get.snackbar('Erro na requisicao', 'Nao foi possivel criar usuario');
+  //     return ResponseApi();
+  //   }
 
-    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+  //   ResponseApi responseApi = ResponseApi.fromJson(response.body);
 
-    return responseApi;
-  }
+  //   return responseApi;
+  // }
 }

@@ -64,7 +64,7 @@ class MessagePage extends StatelessWidget {
           Expanded(
             flex: 1,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => controller.showAlertDialog(context),
               icon: const Icon(Icons.image_outlined),
             ),
           ),
