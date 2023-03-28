@@ -25,6 +25,7 @@ class NavigationController extends GetxController {
 
 
   NavigationController(){
+    print('Usuario Session: ${user.toJson()}');
     connectAndListen();
   }
 

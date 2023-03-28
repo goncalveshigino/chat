@@ -1,0 +1,41 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "iphone 14 pro",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "B7161617-1CF5-48D1-BC83-D33A22FAD410"
+        },
+        {
+            "name": "android 13",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5554"
+        },
+        // {
+        //     "name": "chat (profile mode)",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "profile"
+        // },
+        // {
+        //     "name": "chat (release mode)",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "release"
+        // }
+    ],
+    "compounds": [
+        {
+            "name": "All Devices",
+            "configurations": [
+                "iphone 14 pro",
+                "android 13"
+            ]
+        }
+    ]
+}

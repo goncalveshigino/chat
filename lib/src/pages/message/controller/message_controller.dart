@@ -2,6 +2,7 @@ import 'package:chat/src/models/chat_model.dart';
 import 'package:chat/src/models/message_model.dart';
 import 'package:chat/src/models/response_api.dart';
 import 'package:chat/src/models/user_model.dart';
+import 'package:chat/src/pages/base/controller/navigation_controller.dart';
 import 'package:chat/src/providers/chats_provider.dart';
 import 'package:chat/src/providers/message_provider.dart';
 import 'package:flutter/widgets.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class MessageController extends GetxController {
+  
   TextEditingController messageController = TextEditingController();
 
   UserModel userChat = UserModel.fromJson(Get.arguments['user']);
@@ -20,9 +22,22 @@ class MessageController extends GetxController {
   String idChat = '';
   List<MessageModel> messages = <MessageModel>[].obs;
 
+  final navigationController = Get.find<NavigationController>();
+
   MessageController() {
     print('Usuario chat: ${userChat.toJson()}');
     createChat();
+  }
+
+  void listenMessage() {
+    navigationController.socket.on('message/$idChat', (data) {
+      print('DATA EMITIDA $data');
+      getMessage();
+    });
+  }
+
+  void emitiMessage() {
+    navigationController.socket.emit('message', {'id_chat': idChat});
   }
 
   Future<void> createChat() async {
@@ -36,6 +51,7 @@ class MessageController extends GetxController {
     if (responseApi.success == true) {
       idChat = responseApi.data as String;
       getMessage();
+      listenMessage();
     }
   }
 
@@ -64,6 +80,7 @@ class MessageController extends GetxController {
 
     if (responseApi.success == true) {
       messageController.text = '';
+      emitiMessage();
     }
   }
 
