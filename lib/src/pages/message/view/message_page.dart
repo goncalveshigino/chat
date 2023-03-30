@@ -48,6 +48,7 @@ class MessagePage extends StatelessWidget {
   }
 
   Widget bunbleMessage(MessageModel message) {
+
     print('Mensagens: ${message.toJson()}');
 
     if (message.isImage == true) {
@@ -109,6 +110,7 @@ class MessagePage extends StatelessWidget {
           Expanded(
             flex: 10,
             child: TextField(
+              maxLines: 2,
               onChanged: (String text) {
                 controller.emitWriting();
               },

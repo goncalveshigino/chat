@@ -17,6 +17,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class MessageController extends GetxController {
+  
   final ImagePicker picker = ImagePicker();
   File? imageFile;
 
@@ -32,7 +33,8 @@ class MessageController extends GetxController {
   List<MessageModel> messages = <MessageModel>[].obs;
 
   ScrollController scrollController = ScrollController();
-  final isWriting = false.obs;
+
+  var isWriting = false.obs;
 
   final navigationController = Get.find<NavigationController>();
 
@@ -53,7 +55,7 @@ class MessageController extends GetxController {
       print('DATA EMITIDA $data');
       isWriting.value = true;
 
-      Future.delayed(Duration(milliseconds: 2000), () {
+      Future.delayed(const Duration(milliseconds: 2000), () {
         isWriting.value = false;
       });
     });
@@ -66,7 +68,7 @@ class MessageController extends GetxController {
   void emitWriting() {
     navigationController.socket.emit('writing', {
       'id_chat': idChat,
-      'id_user': userChat,
+      'id_user': myUser.id,
     });
   }
 
