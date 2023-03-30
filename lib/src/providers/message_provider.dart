@@ -33,6 +33,8 @@ class MessageProvider extends GetConnect {
     return messages;
   }
 
+
+
   Future<ResponseApi> createMessage(MessageModel message) async {
     Response response = await post(
       Endpoints.createMessage,
@@ -52,6 +54,32 @@ class MessageProvider extends GetConnect {
 
     return responseApi;
   }
+
+
+
+   Future<ResponseApi> updateToSeen(String idMessage) async {
+    Response response = await put(
+      Endpoints.updateToSeen,
+      {
+        'id': idMessage
+      },
+      headers: {
+        'Content-Type': 'Application/json',
+        'Authorization': user.sessionToken!
+      },
+    );
+
+    if (response.body == null) {
+      Get.snackbar('Error', 'Erro ao criar Mensagem');
+      return ResponseApi();
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+
+    return responseApi;
+  }
+
+
 
   Future<Stream> createWithImage(MessageModel message, File image) async {
     Uri uri =

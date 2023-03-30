@@ -17,7 +17,6 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class MessageController extends GetxController {
-  
   final ImagePicker picker = ImagePicker();
   File? imageFile;
 
@@ -61,6 +60,13 @@ class MessageController extends GetxController {
     });
   }
 
+  void listenMessageSeen() {
+    navigationController.socket.on('seen/$idChat', (data) {
+      print('DATA EMITIDA $data');
+      getMessage();
+    });
+  }
+
   void emitiMessage() {
     navigationController.socket.emit('message', {'id_chat': idChat});
   }
@@ -70,6 +76,10 @@ class MessageController extends GetxController {
       'id_chat': idChat,
       'id_user': myUser.id,
     });
+  }
+
+  void emitMessageSeen() {
+    navigationController.socket.emit('seen', {'id_chat': idChat});
   }
 
   Future<void> createChat() async {
@@ -85,6 +95,7 @@ class MessageController extends GetxController {
       getMessage();
       listenMessage();
       listenWriting();
+      listenMessageSeen();
     }
   }
 
@@ -121,6 +132,13 @@ class MessageController extends GetxController {
     var result = await messageProvider.getMessages(idChat);
     messages.clear();
     messages.addAll(result);
+
+    messages.forEach((m) async {
+      if (m.status != 'VISTO' && m.idReceiver == myUser.id) {
+        await messageProvider.updateToSeen(m.id!);
+        emitMessageSeen();
+      }
+    });
 
     Future.delayed(const Duration(milliseconds: 100), () {
       scrollController.jumpTo(scrollController.position.minScrollExtent);
@@ -260,4 +278,14 @@ class MessageController extends GetxController {
       },
     );
   }
+
+  @override
+  void onClose() {
+    super.onClose();
+    scrollController.dispose();
+    navigationController.socket.off('message/$idChat');
+    navigationController.socket.off('seen/$idChat');
+    navigationController.socket.off('writing/$idChat/${userChat.id}');
+  }
+  
 }

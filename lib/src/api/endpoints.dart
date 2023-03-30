@@ -11,6 +11,7 @@ abstract class Endpoints {
   static const String getUsers = '$apiChat/getAllUsers';
   static const String create = '$apiiChat/create';
   static const String createMessage = '$apiiiChat/createMessage';
+  static const String updateToSeen = '$apiiiChat/updateToSeen';
 }
 
 class Environment {
