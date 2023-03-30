@@ -45,6 +45,9 @@ dependencies:
   intl: ^0.17.0
   socket_io_client: ^1.0.2
   flutter_image_compress: ^1.1.0
+  video_player: ^2.0.6
+  chewie: ^1.2.2
+  
 
 dev_dependencies:
   flutter_test:

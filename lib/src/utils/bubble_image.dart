@@ -63,7 +63,7 @@ class BubbleImage extends StatelessWidget {
                 child: isImage
                     ? FadeInImage.assetNetwork(
                         fit: BoxFit.cover,
-                        placeholder: "assets/img/user_profile_2.png",
+                        placeholder: "assets/img/user_profile.png",
                         image: url)
                     : Text(message),
               ),

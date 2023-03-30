@@ -30,6 +30,10 @@ PODS:
   - SDWebImageWebPCoder (0.11.0):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.15)
+  - video_player_avfoundation (0.0.1):
+    - Flutter
+  - wakelock (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -37,6 +41,8 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
   trunk:
@@ -56,6 +62,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
+  video_player_avfoundation:
+    :path: ".symlinks/plugins/video_player_avfoundation/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
@@ -67,6 +77,8 @@ SPEC CHECKSUMS:
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SDWebImageWebPCoder: 295a6573c512f54ad2dd58098e64e17dcf008499
+  video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 

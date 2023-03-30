@@ -12,6 +12,7 @@ import 'package:path/path.dart';
 import '../models/message_model.dart';
 
 class MessageProvider extends GetConnect {
+  
   String url = Environment.apiChat + 'api/messages';
 
   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
@@ -63,6 +64,24 @@ class MessageProvider extends GetConnect {
       http.ByteStream(image.openRead().cast()),
       await image.length(),
       filename: basename(image.path),
+    ));
+    request.fields['message'] = json.encode(message);
+    final response = await request.send();
+    return response.stream.transform(utf8.decoder);
+  }
+
+
+  Future<Stream> createWithVideo(MessageModel message, File video) async {
+    Uri uri =
+        Uri.http(Environment.API_OLD_CHAT, '/api/messages/createWithVideo');
+
+    final request = http.MultipartRequest('POST', uri);
+    request.headers['Authorization'] = user.sessionToken!;
+    request.files.add(http.MultipartFile(
+      'video',
+      http.ByteStream(video.openRead().cast()),
+      await video.length(),
+      filename: basename(video.path),
     ));
     request.fields['message'] = json.encode(message);
     final response = await request.send();

@@ -32,6 +32,8 @@
 	<string>Usar microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Pegar na biblioteca</string>
+	<key>NSAppTransportSecurity</key>
+	<string>Reproduzir video</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

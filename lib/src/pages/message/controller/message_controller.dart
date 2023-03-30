@@ -31,6 +31,9 @@ class MessageController extends GetxController {
   String idChat = '';
   List<MessageModel> messages = <MessageModel>[].obs;
 
+  ScrollController scrollController = ScrollController();
+  final isWriting = false.obs;
+
   final navigationController = Get.find<NavigationController>();
 
   MessageController() {
@@ -45,8 +48,26 @@ class MessageController extends GetxController {
     });
   }
 
+  void listenWriting() {
+    navigationController.socket.on('writing/$idChat/${userChat.id}', (data) {
+      print('DATA EMITIDA $data');
+      isWriting.value = true;
+
+      Future.delayed(Duration(milliseconds: 2000), () {
+        isWriting.value = false;
+      });
+    });
+  }
+
   void emitiMessage() {
     navigationController.socket.emit('message', {'id_chat': idChat});
+  }
+
+  void emitWriting() {
+    navigationController.socket.emit('writing', {
+      'id_chat': idChat,
+      'id_user': userChat,
+    });
   }
 
   Future<void> createChat() async {
@@ -61,6 +82,7 @@ class MessageController extends GetxController {
       idChat = responseApi.data as String;
       getMessage();
       listenMessage();
+      listenWriting();
     }
   }
 
@@ -97,6 +119,10 @@ class MessageController extends GetxController {
     var result = await messageProvider.getMessages(idChat);
     messages.clear();
     messages.addAll(result);
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      scrollController.jumpTo(scrollController.position.minScrollExtent);
+    });
   }
 
   Future<File?> compressAndGetFile(File file, String targetPath) async {
@@ -128,7 +154,7 @@ class MessageController extends GetxController {
         idSender: myUser.id,
         idReceiver: userChat.id,
         idChat: idChat,
-        isImage: false,
+        isImage: true,
         isVideo: false,
       );
 
@@ -139,7 +165,7 @@ class MessageController extends GetxController {
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
         if (responseApi.success == true) {
-          Get.snackbar('Mensagem Enviada', 'Foi criado corretamente');
+          emitiMessage();
         }
       });
     }
@@ -163,6 +189,65 @@ class MessageController extends GetxController {
 
     AlertDialog alertDialog = AlertDialog(
       title: const Text('Selecione uma imagem'),
+      actions: [galleryButtons, cameraButtons],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      },
+    );
+  }
+
+  Future selectVideos(ImageSource imageSource, BuildContext context) async {
+    final XFile? video = await picker.pickVideo(source: imageSource);
+
+    if (video != null) {
+      File videoFile = File(video.path);
+
+      ProgressDialog progressDialog = ProgressDialog(context: context);
+      progressDialog.show(max: 100, msg: 'Carregando Video...');
+
+      MessageModel message = MessageModel(
+        message: "VIDEO",
+        idSender: myUser.id,
+        idReceiver: userChat.id,
+        idChat: idChat,
+        isImage: false,
+        isVideo: true,
+      );
+
+      Stream stream = await messageProvider.createWithVideo(message, videoFile);
+      stream.listen((res) {
+        progressDialog.close();
+        ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+
+        if (responseApi.success == true) {
+          emitiMessage();
+        }
+      });
+    }
+  }
+
+  void showAlertDialogForVideo(BuildContext context) {
+    Widget galleryButtons = ElevatedButton(
+      onPressed: () {
+        Get.back();
+        selectVideos(ImageSource.gallery, context);
+      },
+      child: const Text('Galeria'),
+    );
+    Widget cameraButtons = ElevatedButton(
+      onPressed: () {
+        Get.back();
+        selectVideos(ImageSource.camera, context);
+      },
+      child: const Text('Camera'),
+    );
+
+    AlertDialog alertDialog = AlertDialog(
+      title: const Text('Selecione um video'),
       actions: [galleryButtons, cameraButtons],
     );
 

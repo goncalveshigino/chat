@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:video_player/video_player.dart';
+
 MessageModel messageModelFromJson(String str) =>
     MessageModel.fromJson(json.decode(str));
 
@@ -21,6 +23,8 @@ class MessageModel {
   bool? isVideo;
   int? timestamp;
 
+  VideoPlayerController? controller;
+
   MessageModel({
     this.id,
     this.message,
@@ -32,6 +36,7 @@ class MessageModel {
     this.isImage,
     this.isVideo,
     this.timestamp,
+    this.controller
   });
 
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
@@ -44,11 +49,10 @@ class MessageModel {
         url: json["url"],
         isImage: json["is_image"],
         isVideo: json["is_video"],
-        timestamp:int.parse(json["timestamp"]) ,
+        timestamp: int.parse(json["timestamp"]),
       );
 
   static List<MessageModel> fromJsonList(List<dynamic> jsonList) {
-    
     List<MessageModel> toList = [];
 
     jsonList.forEach((item) {

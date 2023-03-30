@@ -2,12 +2,13 @@ import 'package:chat/main.dart';
 import 'package:chat/src/models/message_model.dart';
 import 'package:chat/src/pages/message/controller/message_controller.dart';
 import 'package:chat/src/utils/bubble.dart';
+import 'package:chat/src/utils/bubble_image.dart';
+import 'package:chat/src/utils/bubble_video.dart';
 import 'package:chat/src/utils/relative_time_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MessagePage extends StatelessWidget {
-
   final controller = Get.put(MessageController());
 
   @override
@@ -22,6 +23,8 @@ class MessagePage extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 50),
                   child: ListView(
+                    reverse: true,
+                    controller: controller.scrollController,
                     children: getMessages(),
                   ),
                 ),
@@ -45,6 +48,34 @@ class MessagePage extends StatelessWidget {
   }
 
   Widget bunbleMessage(MessageModel message) {
+    print('Mensagens: ${message.toJson()}');
+
+    if (message.isImage == true) {
+      return BubbleImage(
+        message: message.message ?? '',
+        delivered: true,
+        isMe: message.idSender == controller.myUser.id ? true : false,
+        status: message.status ?? 'ENVIADO',
+        time: RelativeTimeUtil.getRelativeTime(message.timestamp ?? 0),
+        isImage: true,
+        url: message.url ??
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+      );
+    }
+
+    if (message.isVideo == true) {
+      return BubbleVideo(
+        message: message.message ?? '',
+        delivered: true,
+        isMe: message.idSender == controller.myUser.id ? true : false,
+        status: message.status ?? 'ENVIADO',
+        time: RelativeTimeUtil.getRelativeTime(message.timestamp ?? 0),
+        url: message.url ??
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+        videoController: message.controller,
+      );
+    }
+
     return Bubble(
       message: message.message ?? '',
       delivered: true,
@@ -71,13 +102,16 @@ class MessagePage extends StatelessWidget {
           Expanded(
             flex: 1,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => controller.showAlertDialogForVideo(context),
               icon: const Icon(Icons.video_call_rounded),
             ),
           ),
           Expanded(
             flex: 10,
             child: TextField(
+              onChanged: (String text) {
+                controller.emitWriting();
+              },
               controller: controller.messageController,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
@@ -112,10 +146,17 @@ class MessagePage extends StatelessWidget {
               color: Colors.grey[700],
               fontWeight: FontWeight.bold),
         ),
-        subtitle: const Text(
-          'Desconctado',
-          style: TextStyle(color: Colors.grey),
-        ),
+        subtitle: controller.isWriting.value == true
+            ? const Text(
+                'Escrevendo..',
+                style: TextStyle(
+                  color: Colors.green,
+                ),
+              )
+            : const Text(
+                'Desconctado',
+                style: TextStyle(color: Colors.grey),
+              ),
         leading: IconButton(
           onPressed: () => Get.back(),
           icon: const Icon(Icons.arrow_back_ios),
