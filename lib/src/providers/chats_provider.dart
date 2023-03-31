@@ -13,6 +13,26 @@ class ChatProvider extends GetConnect {
 
   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
 
+  Future<List<ChatModel>> getChats() async {
+    Response response = await get(
+        '$url/findByIdUser/${user.id}',
+        //'${Endpoints.getUsers}${user.id}',
+        headers: {
+          'Content-Type': 'Application/json',
+          'Authorization': user.sessionToken!
+        });
+
+    if (response.statusCode == 401) {
+      Get.snackbar('Requicao Negada', 'Erro ao carregar chats');
+      return [];
+    }
+
+    List<ChatModel> chats = ChatModel.fromJsonList(response.body);
+
+
+    return chats;
+  }
+
   Future<ResponseApi> create(ChatModel chat) async {
     Response response = await post(
       Endpoints.create,

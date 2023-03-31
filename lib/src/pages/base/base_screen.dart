@@ -1,4 +1,4 @@
-import 'package:chat/src/pages/chats/chats_page.dart';
+import 'package:chat/src/pages/chats/view/chats_page.dart';
 import 'package:chat/src/pages/profile/view/profile_page.dart';
 import 'package:chat/src/pages/users/users_page.dart';
 import 'package:chat/src/utils/my_colors.dart';
@@ -23,7 +23,7 @@ class _BaseScreenState extends State<BaseScreen> {
         physics: const NeverScrollableScrollPhysics(),
         controller: navigationController.pageController,
         children:  [
-         const ChatsPage(),
+          ChatsPage(),
           UsersPage(),
           ProfilePage(),
         ],
