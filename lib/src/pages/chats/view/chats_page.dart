@@ -7,8 +7,9 @@ import 'package:get/get.dart';
 import '../../../utils/my_colors.dart';
 
 class ChatsPage extends StatelessWidget {
-
   ChatsController controller = Get.put(ChatsController());
+
+  ChatsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ChatsPage extends StatelessWidget {
                 return ListView.builder(
                   itemCount: snapshot.data?.length ?? 0,
                   itemBuilder: (_, index) {
-                    return cardUser(snapshot.data![index]);
+                    return cardChat(snapshot.data![index]);
                   },
                 );
               } else {
@@ -42,22 +43,24 @@ class ChatsPage extends StatelessWidget {
     );
   }
 
-  Widget cardUser(ChatModel chat) {
+  Widget cardChat(ChatModel chat) {
     return ListTile(
-      onTap: (){},
-      title: Text(chat.idUser1 == controller.myUser.id ? chat.nameUser1! : chat.nameUser2!),
-      subtitle: Text(''),
+      onTap: () {},
+      title: Text(
+        chat.idUser1 == controller.myUser.id
+            ? chat.nameUser2 ?? ''
+            : chat.nameUser1 ?? '',
+      ),
+      subtitle:  Text(chat.lastMessage!),
       leading: AspectRatio(
         aspectRatio: 1,
         child: ClipOval(
           child: FadeInImage.assetNetwork(
-            fit: BoxFit.cover,
-            placeholder: 'assets/img/user_profile_2.png',
-            image: chat.idUser1 == controller.myUser.id 
-                   ? chat.imageUser2 ?? Environment.image_url
-                   : chat.imageUser1 ?? Environment.image_url
-                
-          ),
+              fit: BoxFit.cover,
+              placeholder: 'assets/img/user_profile_2.png',
+              image: chat.idUser1 == controller.myUser.id
+                  ? chat.imageUser2 ?? Environment.image_url
+                  : chat.imageUser1 ?? Environment.image_url),
         ),
       ),
     );
