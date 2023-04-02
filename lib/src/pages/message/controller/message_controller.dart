@@ -68,7 +68,10 @@ class MessageController extends GetxController {
   }
 
   void emitiMessage() {
-    navigationController.socket.emit('message', {'id_chat': idChat});
+    navigationController.socket.emit('message', {
+      'id_chat': idChat,
+      'id_user': userChat.id
+    });
   }
 
   void emitWriting() {

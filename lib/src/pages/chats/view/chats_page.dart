@@ -1,6 +1,7 @@
 import 'package:chat/src/api/endpoints.dart';
 import 'package:chat/src/models/chat_model.dart';
 import 'package:chat/src/pages/chats/controller/chats_controller.dart';
+import 'package:chat/src/utils/relative_time_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,27 +21,39 @@ class ChatsPage extends StatelessWidget {
         backgroundColor: MyColors.primaryColor,
       ),
       body: SafeArea(
-        child: FutureBuilder(
-          future: controller.getChats(),
-          builder: (context, AsyncSnapshot<List<ChatModel>> snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data?.isNotEmpty == true) {
-                return ListView.builder(
-                  itemCount: snapshot.data?.length ?? 0,
-                  itemBuilder: (_, index) {
-                    return cardChat(snapshot.data![index]);
-                  },
-                );
-              } else {
-                return Container();
-              }
-            } else {
-              return Container();
-            }
-          },
-        ),
+        child: Obx(() => ListView(
+              children: getChats(),
+            )),
       ),
     );
+  }
+
+  Widget circleMessageunRead(int number) {
+    return Container(
+      margin: const EdgeInsets.only(top: 5, left: 10, right: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Container(
+            height: 25,
+            width: 25,
+            color: MyColors.primaryColor,
+            alignment: Alignment.center,
+            child: Text(
+              number.toString(),
+              style: const TextStyle(color: Colors.white, fontSize: 10),
+              textAlign: TextAlign.center,
+            )),
+      ),
+    );
+  }
+
+  List<Widget> getChats() {
+    return controller.chats.map((chat) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        child: cardChat(chat),
+      );
+    }).toList();
   }
 
   Widget cardChat(ChatModel chat) {
@@ -51,7 +64,23 @@ class ChatsPage extends StatelessWidget {
             ? chat.nameUser2 ?? ''
             : chat.nameUser1 ?? '',
       ),
-      subtitle:  Text(chat.lastMessage!),
+      subtitle: Text(chat.lastMessage!),
+      trailing: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 7),
+            child: Text(
+              RelativeTimeUtil.getRelativeTime(chat.lastMessageTimestamp ?? 0),
+              style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+            ),
+          ),
+          chat.unReadMessage! > 0
+              ? circleMessageunRead(chat.unReadMessage ?? 0)
+              : const SizedBox(
+                  height: 0,
+                ),
+        ],
+      ),
       leading: AspectRatio(
         aspectRatio: 1,
         child: ClipOval(
@@ -65,4 +94,5 @@ class ChatsPage extends StatelessWidget {
       ),
     );
   }
+  //koolmusic..012345678
 }

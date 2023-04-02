@@ -13,16 +13,16 @@ class RelativeTimeUtil {
       time = format.format(date);
     } else if (diff.inDays > 0 && diff.inDays < 7) {
       if (diff.inDays == 1) {
-        time =  'Hace ' + diff.inDays.toString() + ' dia';
+        time =  'Faz ' + diff.inDays.toString() + ' dia';
       } else {
-        time = 'Hace ' + diff.inDays.toString() + ' dias';
+        time = 'Faz ' + diff.inDays.toString() + ' dias';
       }
     } else {
       if (diff.inDays == 7) {
-        time = 'Hace ' + (diff.inDays / 7).floor().toString() + ' semana';
+        time = 'Faz ' + (diff.inDays / 7).floor().toString() + ' semana';
       } else {
 
-        time = 'Hace ' + (diff.inDays / 7).floor().toString() + ' semanas';
+        time = 'Faz ' + (diff.inDays / 7).floor().toString() + ' semanas';
       }
     }
     return time;

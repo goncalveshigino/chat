@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
+
         
         {
             "name": "iphone 14 pro",
@@ -18,6 +19,12 @@
             "type": "dart",
             "deviceId": "emulator-5554"
         },  
+        {
+            "name": "SM",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "9887a8303250563935"
+        },
         // {
         //     "name": "chat (profile mode)",
         //     "request": "launch",
@@ -36,7 +43,7 @@
             "name": "All Devices",
             "configurations": [
                 "iphone 14 pro",
-                "android"
+                "SM"
             ]
         }
     ]

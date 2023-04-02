@@ -23,6 +23,8 @@ class ChatModel {
   String? phoneUser2;
 
   String? lastMessage;
+  int? unReadMessage;
+  int? lastMessageTimestamp;
 
   ChatModel({
     this.id,
@@ -40,6 +42,8 @@ class ChatModel {
     this.imageUser2,
     this.phoneUser2,
     this.lastMessage,
+    this.unReadMessage,
+    this.lastMessageTimestamp,
   });
 
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
@@ -57,8 +61,13 @@ class ChatModel {
         emailUser2: json["email_user2"],
         imageUser2: json["image_user2"],
         phoneUser2: json["phone_user2"],
-
         lastMessage: json["last_message"],
+        unReadMessage: json["unread_message"] != null
+            ? int.parse(json["unread_message"])
+            : 0,
+        lastMessageTimestamp: json["last_message_timestamp"] != null
+            ? int.parse(json["last_message_timestamp"])
+            : 0
       );
 
   static List<ChatModel> fromJsonList(List<dynamic> jsonList) {
@@ -87,6 +96,8 @@ class ChatModel {
         "email_user2": emailUser2,
         "image_user2": imageUser2,
         "phone_user2": phoneUser2,
-        "last_message": lastMessage
+        "last_message": lastMessage,
+        "unread_message": unReadMessage, 
+        "last_message_timestamp": lastMessageTimestamp
       };
 }
