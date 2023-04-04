@@ -6,13 +6,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ChatsController extends GetxController {
-
   final navigationController = Get.find<NavigationController>();
   ChatProvider chatProvider = ChatProvider();
+
   List<ChatModel> chats = <ChatModel>[].obs;
 
   ChatsController() {
-
     getChats();
     listenMessage();
   }

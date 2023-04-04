@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../../../utils/my_colors.dart';
 
 class ChatsPage extends StatelessWidget {
+  
   ChatsController controller = Get.put(ChatsController());
 
   ChatsPage({super.key});
@@ -20,11 +21,11 @@ class ChatsPage extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: MyColors.primaryColor,
       ),
-      body: SafeArea(
-        child: Obx(() => ListView(
+      body: Obx(() => SafeArea(
+            child: ListView(
               children: getChats(),
-            )),
-      ),
+            ),
+          )),
     );
   }
 
