@@ -94,6 +94,29 @@ class UsersProvider extends GetConnect {
     return responseApi;
   }
 
+    Future<ResponseApi> updateNotificationToken(String idUser, String token) async {
+    Response response = await put(
+      Endpoints.updateNotificationToken,
+      {
+       'id': idUser, 
+       'notification_token': token
+      },
+      headers: {
+        'Content-Type': 'Application/json',
+        'Authorization': user.sessionToken!
+      },
+    );
+
+    if (response.body == null) {
+      Get.snackbar('Error', 'Erro ao atualizar token para notificar');
+      return ResponseApi();
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+
+    return responseApi;
+  }
+
 //------------------------------------
   Future<Stream> createWithImage(UserModel user, File image) async {
     Uri uri = Uri.http(Environment.API_OLD_CHAT, '/api/users/createUser');

@@ -1,3 +1,4 @@
+import 'package:chat/src/providers/users_providers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -55,5 +56,13 @@ class PushNotificationProvider extends GetConnect {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('Nova notificacao ddgdgdgdgdgdg');
     });
+  }
+
+  void saveToken(String idUser) async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    UsersProvider usersProvider = UsersProvider();
+    if (token != null) {
+      await usersProvider.updateNotificationToken(idUser, token);
+    }
   }
 }

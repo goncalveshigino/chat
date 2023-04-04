@@ -1,5 +1,6 @@
 import 'package:chat/src/api/endpoints.dart';
 import 'package:chat/src/models/user_model.dart';
+import 'package:chat/src/providers/notification_provider.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,10 +13,7 @@ abstract class NavigationTabs {
 }
 
 class NavigationController extends GetxController {
-
-
   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
-
 
   late PageController _pageController;
   late RxInt _currentIndex;
@@ -23,17 +21,25 @@ class NavigationController extends GetxController {
   PageController get pageController => _pageController;
   int get currentIndex => _currentIndex.value;
 
+  PushNotificationProvider pushNotificationProvider =
+      PushNotificationProvider();
 
-  NavigationController(){
-    print('Usuario Session: ${user.toJson()}');
-    connectAndListen();
-  }
-
-  
   Socket socket = io('${Environment.apiChat}chat', <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': false
   });
+
+  NavigationController() {
+    print('Usuario Session: ${user.toJson()}');
+    connectAndListen();
+    saveToken();
+  }
+
+  void saveToken() {
+    if(user.id != null){
+      pushNotificationProvider.saveToken(user.id!);
+    }
+  }
 
   @override
   void onInit() {
