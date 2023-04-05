@@ -8,6 +8,7 @@ import 'package:chat/src/models/user_model.dart';
 import 'package:chat/src/pages/base/controller/navigation_controller.dart';
 import 'package:chat/src/providers/chats_provider.dart';
 import 'package:chat/src/providers/message_provider.dart';
+import 'package:chat/src/providers/notification_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class MessageController extends GetxController {
+
   final ImagePicker picker = ImagePicker();
   File? imageFile;
 
@@ -28,11 +30,12 @@ class MessageController extends GetxController {
   ChatProvider chatProvider = ChatProvider();
   MessageProvider messageProvider = MessageProvider();
 
+  PushNotificationProvider pushNotificationProvider =
+      PushNotificationProvider();
+
   String idChat = '';
   List<MessageModel> messages = <MessageModel>[].obs;
-
   ScrollController scrollController = ScrollController();
-
   var isWriting = false.obs;
 
   final navigationController = Get.find<NavigationController>();
@@ -40,6 +43,21 @@ class MessageController extends GetxController {
   MessageController() {
     print('Usuario chat: ${userChat.toJson()}');
     createChat();
+  }
+
+  void sendNotification(String message, String idMessage) {
+
+    Map<String, dynamic> data = {
+      'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+      'title': '${myUser.firstname}${myUser.lastname}',
+      'body': message,
+      'id_message': idMessage,
+      'id_chat': idChat
+    };
+
+    print('Nooooooootifica $data');
+
+    pushNotificationProvider.sendMessage(userChat.notificationToken!, data);
   }
 
   void listenMessage() {
@@ -68,10 +86,8 @@ class MessageController extends GetxController {
   }
 
   void emitiMessage() {
-    navigationController.socket.emit('message', {
-      'id_chat': idChat,
-      'id_user': userChat.id
-    });
+    navigationController.socket
+        .emit('message', {'id_chat': idChat, 'id_user': userChat.id});
   }
 
   void emitWriting() {
@@ -103,6 +119,7 @@ class MessageController extends GetxController {
   }
 
   Future<void> sendMessage() async {
+
     String messaageText = messageController.text;
 
     if (messaageText.isEmpty) {
@@ -128,6 +145,7 @@ class MessageController extends GetxController {
     if (responseApi.success == true) {
       messageController.text = '';
       emitiMessage();
+      sendNotification(messaageText, responseApi.data as String);
     }
   }
 
@@ -290,5 +308,4 @@ class MessageController extends GetxController {
     navigationController.socket.off('seen/$idChat');
     navigationController.socket.off('writing/$idChat/${userChat.id}');
   }
-  
 }

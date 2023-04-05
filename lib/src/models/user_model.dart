@@ -18,6 +18,7 @@ class UserModel {
   String? password;
   String? sessionToken;
   String? isAvailable;
+  String? notificationToken;
 
   UserModel({
     this.id,
@@ -29,6 +30,7 @@ class UserModel {
     this.password,
     this.sessionToken,
     this.isAvailable,
+    this.notificationToken,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -41,10 +43,10 @@ class UserModel {
         password: json["password"],
         sessionToken: json["session_token"],
         isAvailable: json["is_available"],
+        notificationToken: json["notification_token"],
       );
 
   static List<UserModel> fromJsonList(List<dynamic> jsonList) {
-    
     List<UserModel> toList = [];
 
     jsonList.forEach((item) {
@@ -65,5 +67,6 @@ class UserModel {
         "password": password,
         "session_token": sessionToken,
         "is_available": isAvailable,
+        "notification_token": notificationToken,
       };
 }

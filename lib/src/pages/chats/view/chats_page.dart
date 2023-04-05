@@ -59,7 +59,7 @@ class ChatsPage extends StatelessWidget {
 
   Widget cardChat(ChatModel chat) {
     return ListTile(
-      onTap: () {},
+      onTap: () => controller.goToChat(chat),
       title: Text(
         chat.idUser1 == controller.myUser.id
             ? chat.nameUser2 ?? ''

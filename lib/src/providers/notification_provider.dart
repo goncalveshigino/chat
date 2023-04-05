@@ -34,28 +34,49 @@ class PushNotificationProvider extends GetConnect {
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-
-      if (notification != null && android != null) {
-        plugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              icon: 'launch_background',
-            ),
-          ),
-        );
-      }
+      print('Nova Notificacao ${message.data}');
+      showNotification(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('Nova notificacao ddgdgdgdgdgdg');
     });
+  }
+
+  Future<void> showNotification(RemoteMessage message) async {
+
+    AndroidNotificationDetails? androidPlatformChannelSpecifics;
+
+    androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      channel.id,
+      channel.name,
+      icon:'launch_background',
+    );
+
+    plugin.show(
+      
+      int.parse(message.data['id_chat']),
+      message.data['title'],
+      message.data['body'],
+      NotificationDetails(android: androidPlatformChannelSpecifics),
+    );   
+  }
+
+  Future<Response> sendMessage(String token, Map<String, dynamic> data) async {
+    Response response = await post('https://fcm.googleapis.com/fcm/send', 
+    {
+      'priority': 'high',
+      'ttl': '4500s',
+      'data': data,
+      'to': token,
+    }, 
+    headers: {
+      'Content-Type': 'Application/json',
+      'Authorization':
+          'key=AAAARYsii2M:APA91bFUEziQQMWaNqsUixLX2ZvG0JPY51A44qGh7tassnEPAhLUE3w4b_jLbuOVHs-b1U4d8lZfe-YvaeNC-VuzAXWg_EdtIeEgqkXJm5xdfPqOyn77uipQ6dTTazallCEKnFvfzEIq'
+    });
+
+    return response;
   }
 
   void saveToken(String idUser) async {

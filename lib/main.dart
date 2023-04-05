@@ -18,7 +18,7 @@ PushNotificationProvider pushNotificationProvider = PushNotificationProvider();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  print('Handling a background message ${message.messageId}');
+  pushNotificationProvider.showNotification(message);
 }
 
 void main() async {
@@ -43,10 +43,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  
   @override
   void initState() {
-    super.initState();
-    pushNotificationProvider.onMessageListiner();
+     super.initState();
+    pushNotificationProvider.onMessageListiner(); 
   }
 
   @override
