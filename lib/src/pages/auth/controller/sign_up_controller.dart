@@ -183,6 +183,6 @@ class SignUpController extends GetxController {
   }
 
   void goToSignInPage() {
-   Get.offNamedUntil(PagesRoutes.signInRoute, (route) => false);;
+   Get.offNamedUntil(PagesRoutes.signInRoute, (route) => false);
   }
 }

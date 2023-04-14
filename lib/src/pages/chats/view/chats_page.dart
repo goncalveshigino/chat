@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../utils/my_colors.dart';
 
+// ignore: must_be_immutable
 class ChatsPage extends StatelessWidget {
   
   ChatsController controller = Get.put(ChatsController());

@@ -11,6 +11,8 @@ import 'package:get/get.dart';
 class MessagePage extends StatelessWidget {
   final controller = Get.put(MessageController());
 
+   MessagePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

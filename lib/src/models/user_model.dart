@@ -49,10 +49,15 @@ class UserModel {
   static List<UserModel> fromJsonList(List<dynamic> jsonList) {
     List<UserModel> toList = [];
 
-    jsonList.forEach((item) {
+    for (var item in jsonList) {
       UserModel user = UserModel.fromJson(item);
       toList.add(user);
-    });
+    }
+
+    //  jsonList.forEach((item) {
+    //   UserModel user = UserModel.fromJson(item);
+    //   toList.add(user);
+    // });
 
     return toList;
   }

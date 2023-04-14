@@ -30,7 +30,6 @@ class NavigationController extends GetxController {
   });
 
   NavigationController() {
-    print('Usuario Session: ${user.toJson()}');
     connectAndListen();
     saveToken();
   }
@@ -70,7 +69,7 @@ class NavigationController extends GetxController {
     if (user.id != null) {
       socket.connect();
       socket.onConnect((data) {
-        print('Usuario conectado a SOCKET IO');
+     
         emitOnline();
       });
     }

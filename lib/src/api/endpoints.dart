@@ -16,8 +16,10 @@ abstract class Endpoints {
 }
 
 class Environment {
+  // ignore: constant_identifier_names
   static const String API_OLD_CHAT = "192.168.8.101:3000";
   static const String apiChat = "http://192.168.8.101:3000/";
+  // ignore: constant_identifier_names
   static const String image_url =
       "https://cdn-icons-png.flaticon.com/512/16/16480.png";
 }

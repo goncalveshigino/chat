@@ -110,7 +110,7 @@ class ProfileEditController extends GetxController {
 
   void saveSession(dynamic responseApi) {
 
-    print('Usuario Atualizado ${responseApi.data}');
+
 
     if (responseApi.success == true) {
       UserModel userResponse = UserModel.fromJson(responseApi.data);

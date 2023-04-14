@@ -25,7 +25,6 @@ class SignInController extends GetxController {
       if (responseApi.success == true) {
         UserModel user = UserModel.fromJson(responseApi.data);
 
-        print('Response Api:  ${responseApi.toJson()}');
 
         storage.write('user', user.toJson());
 

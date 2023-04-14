@@ -11,7 +11,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'firebase_options.dart';
 
-//TODO: remover
+
 UserModel myUser = UserModel.fromJson(GetStorage().read('user') ?? {});
 
 PushNotificationProvider pushNotificationProvider = PushNotificationProvider();

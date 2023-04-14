@@ -1,9 +1,9 @@
 
+import 'package:get/get.dart';
 
 import 'package:chat/src/models/user_model.dart';
 import 'package:chat/src/pages_routes/page_routes.dart';
 import 'package:chat/src/providers/users_providers.dart';
-import 'package:get/get.dart';
 
 class UserController extends GetxController {
 

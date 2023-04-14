@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class MessageController extends GetxController {
@@ -44,7 +45,6 @@ class MessageController extends GetxController {
   final navigationController = Get.find<NavigationController>();
 
   MessageController() {
-    print('Usuario chat: ${userChat.toJson()}');
     createChat();
     checkIfIsOnline();
   }
@@ -59,14 +59,14 @@ class MessageController extends GetxController {
       'url': url
     };
 
-    print('Nooooooootifica $data');
+  
 
     pushNotificationProvider.sendMessage(userChat.notificationToken!, data);
   }
 
   void listenMessage() {
     navigationController.socket.on('message/$idChat', (data) {
-      print('DATA EMITIDA $data');
+  
       getMessage();
     });
   }
@@ -94,7 +94,7 @@ class MessageController extends GetxController {
 
   void listenWriting() {
     navigationController.socket.on('writing/$idChat/${userChat.id}', (data) {
-      print('DATA EMITIDA $data');
+    
       isWriting.value = true;
 
       Future.delayed(const Duration(milliseconds: 2000), () {
@@ -112,7 +112,7 @@ class MessageController extends GetxController {
 
   void listenMessageReceived() {
     navigationController.socket.on('received/$idChat', (data) {
-      print('DATA EMITIDA $data');
+  
       getMessage();
     });
   }

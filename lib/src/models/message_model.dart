@@ -55,10 +55,15 @@ class MessageModel {
   static List<MessageModel> fromJsonList(List<dynamic> jsonList) {
     List<MessageModel> toList = [];
 
-    jsonList.forEach((item) {
+    for (var item in jsonList) {
       MessageModel message = MessageModel.fromJson(item);
       toList.add(message);
-    });
+    }
+
+    // jsonList.forEach((item) {
+    //   MessageModel message = MessageModel.fromJson(item);
+    //   toList.add(message);
+    // });
 
     return toList;
   }
