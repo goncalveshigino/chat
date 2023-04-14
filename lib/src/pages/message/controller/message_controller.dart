@@ -9,6 +9,7 @@ import 'package:chat/src/pages/base/controller/navigation_controller.dart';
 import 'package:chat/src/providers/chats_provider.dart';
 import 'package:chat/src/providers/message_provider.dart';
 import 'package:chat/src/providers/notification_provider.dart';
+import 'package:chat/src/providers/users_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,6 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class MessageController extends GetxController {
-
   final ImagePicker picker = ImagePicker();
   File? imageFile;
 
@@ -32,27 +32,31 @@ class MessageController extends GetxController {
 
   PushNotificationProvider pushNotificationProvider =
       PushNotificationProvider();
+  UsersProvider usersProvider = UsersProvider();
 
   String idChat = '';
   List<MessageModel> messages = <MessageModel>[].obs;
   ScrollController scrollController = ScrollController();
   var isWriting = false.obs;
+  var isOnline = false.obs;
+  String idSocket = '';
 
   final navigationController = Get.find<NavigationController>();
 
   MessageController() {
     print('Usuario chat: ${userChat.toJson()}');
     createChat();
+    checkIfIsOnline();
   }
 
-  void sendNotification(String message, String idMessage) {
-
+  void sendNotification(String message, String idMessage, {url = ''}) {
     Map<String, dynamic> data = {
       'click_action': 'FLUTTER_NOTIFICATION_CLICK',
       'title': '${myUser.firstname}${myUser.lastname}',
       'body': message,
       'id_message': idMessage,
-      'id_chat': idChat
+      'id_chat': idChat,
+      'url': url
     };
 
     print('Nooooooootifica $data');
@@ -65,6 +69,27 @@ class MessageController extends GetxController {
       print('DATA EMITIDA $data');
       getMessage();
     });
+  }
+
+  void listenOnline() {
+    navigationController.socket.off('online/${userChat.id}');
+    navigationController.socket.on('online/${userChat.id}', (data) {
+      isOnline.value = true;
+      idSocket = data['id_socket'];
+      listenOffline();
+    });
+  }
+
+  void listenOffline() async {
+    if (idSocket.isNotEmpty) {
+      navigationController.socket.off('offline/$idSocket');
+      navigationController.socket.on('offline/$idSocket', (data) {
+        if (idSocket == data['id_socket']) {
+          isOnline.value = false;
+          navigationController.socket.off('offline/$idSocket');
+        }
+      });
+    }
   }
 
   void listenWriting() {
@@ -101,6 +126,18 @@ class MessageController extends GetxController {
     navigationController.socket.emit('seen', {'id_chat': idChat});
   }
 
+  void checkIfIsOnline() async {
+    Response response = await usersProvider.checkIfIsOnline(userChat.id!);
+
+    if (response.body['online'] == true) {
+      isOnline.value = true;
+      idSocket = response.body['id_socket'];
+      listenOnline();
+    } else {
+      isOnline.value = false;
+    }
+  }
+
   Future<void> createChat() async {
     ChatModel chat = ChatModel(
       idUser1: myUser.id,
@@ -111,15 +148,16 @@ class MessageController extends GetxController {
 
     if (responseApi.success == true) {
       idChat = responseApi.data as String;
+      checkIfIsOnline();
       getMessage();
       listenMessage();
       listenWriting();
       listenMessageSeen();
+      listenOffline();
     }
   }
 
   Future<void> sendMessage() async {
-
     String messaageText = messageController.text;
 
     if (messaageText.isEmpty) {
@@ -206,6 +244,11 @@ class MessageController extends GetxController {
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
         if (responseApi.success == true) {
+          sendNotification(
+            '😂Image',
+            responseApi.data['id'] as String,
+            url: responseApi.data['url'] as String,
+          );
           emitiMessage();
         }
       });
@@ -265,6 +308,10 @@ class MessageController extends GetxController {
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
         if (responseApi.success == true) {
+          sendNotification(
+            '🎬 Video novo',
+            responseApi.data as String,
+          );
           emitiMessage();
         }
       });

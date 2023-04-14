@@ -36,7 +36,7 @@ class NavigationController extends GetxController {
   }
 
   void saveToken() {
-    if(user.id != null){
+    if (user.id != null) {
       pushNotificationProvider.saveToken(user.id!);
     }
   }
@@ -71,8 +71,15 @@ class NavigationController extends GetxController {
       socket.connect();
       socket.onConnect((data) {
         print('Usuario conectado a SOCKET IO');
+        emitOnline();
       });
     }
+  }
+
+  void emitOnline() {
+    socket.emit('online', {
+      'id_user': user.id,
+    });
   }
 
   @override

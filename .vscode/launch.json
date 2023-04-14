@@ -6,6 +6,8 @@
     "configurations": [
 
 
+
+
     
 
 
@@ -46,7 +48,7 @@
         {
             "name": "All Devices",
             "configurations": [
-                "SM",
+                "iphone 14 pro",
                 "android",
             ]
         }

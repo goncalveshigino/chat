@@ -155,9 +155,9 @@ class MessagePage extends StatelessWidget {
                   color: Colors.green,
                 ),
               )
-            : const Text(
-                'Desconctado',
-                style: TextStyle(color: Colors.grey),
+            :  Text(
+                controller.isOnline.value == true ? 'Online': 'Offline',
+                style:const TextStyle(color: Colors.grey),
               ),
         leading: IconButton(
           onPressed: () => Get.back(),

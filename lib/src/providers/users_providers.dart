@@ -34,6 +34,20 @@ class UsersProvider extends GetConnect {
     return users;
   }
 
+
+
+   Future<Response> checkIfIsOnline(String idUser) async {
+    Response response = await get(
+        '$url/checkIfIsOnline/$idUser',
+        //'${Endpoints.getUsers}${user.id}',
+        headers: {
+          'Content-Type': 'Application/json',
+          'Authorization': user.sessionToken!
+        });
+
+    return response;
+  }
+
   Future<ResponseApi> signIn(
     String email,
     String password,
