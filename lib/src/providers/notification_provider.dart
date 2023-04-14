@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:chat/src/providers/message_provider.dart';
 import 'package:chat/src/providers/users_providers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:socket_io_client/socket_io_client.dart';
+
+import '../api/endpoints.dart';
 
 class PushNotificationProvider extends GetConnect {
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
@@ -13,6 +19,8 @@ class PushNotificationProvider extends GetConnect {
   );
 
   FlutterLocalNotificationsPlugin plugin = FlutterLocalNotificationsPlugin();
+
+  MessageProvider messageProvider = MessageProvider();
 
   void initPushNotification() async {
     await plugin
@@ -54,7 +62,7 @@ class PushNotificationProvider extends GetConnect {
     AndroidNotificationDetails? androidPlatformChannelSpecifics;
 
     if (message.data['url'] == '') {
-        androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      androidPlatformChannelSpecifics = AndroidNotificationDetails(
         channel.id,
         channel.name,
         icon: 'launch_background',
@@ -70,12 +78,9 @@ class PushNotificationProvider extends GetConnect {
         htmlFormatSummaryText: true,
       );
 
-       androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        channel.id,
-        channel.name,
-        icon: 'launch_background',
-        styleInformation: information
-      );
+      androidPlatformChannelSpecifics = AndroidNotificationDetails(
+          channel.id, channel.name,
+          icon: 'launch_background', styleInformation: information);
     }
 
     plugin.show(
@@ -84,6 +89,18 @@ class PushNotificationProvider extends GetConnect {
       message.data['body'],
       NotificationDetails(android: androidPlatformChannelSpecifics),
     );
+
+
+    Socket socket = io('${Environment.apiChat}chat', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+
+    socket.connect();
+    socket.emit('received', {
+      'id_chat': message.data['id_chat'],
+      'id_message': message.data['id_message']
+    });
   }
 
   Future<Response> sendMessage(String token, Map<String, dynamic> data) async {

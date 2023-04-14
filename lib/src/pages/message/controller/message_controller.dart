@@ -110,6 +110,13 @@ class MessageController extends GetxController {
     });
   }
 
+  void listenMessageReceived() {
+    navigationController.socket.on('received/$idChat', (data) {
+      print('DATA EMITIDA $data');
+      getMessage();
+    });
+  }
+
   void emitiMessage() {
     navigationController.socket
         .emit('message', {'id_chat': idChat, 'id_user': userChat.id});
@@ -154,6 +161,7 @@ class MessageController extends GetxController {
       listenWriting();
       listenMessageSeen();
       listenOffline();
+      listenMessageReceived();
     }
   }
 

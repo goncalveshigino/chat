@@ -8,6 +8,9 @@
 
 
 
+
+
+
     
 
 
@@ -31,25 +34,25 @@
             "type": "dart",
             "deviceId": "9887a8303250563935"
         },
-        // {
-        //     "name": "chat (profile mode)",
-        //     "request": "launch",
-        //     "type": "dart",
-        //     "flutterMode": "profile"
-        // },
-        // {
-        //     "name": "chat (release mode)",
-        //     "request": "launch",
-        //     "type": "dart",
-        //     "flutterMode": "release"
-        // }
+        {
+            "name": "chat (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "chat (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
     ],
     "compounds": [
         {
             "name": "All Devices",
             "configurations": [
-                "iphone 14 pro",
                 "android",
+                "SM",
             ]
         }
     ]

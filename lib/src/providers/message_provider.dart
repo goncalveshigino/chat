@@ -13,7 +13,7 @@ import '../models/message_model.dart';
 
 class MessageProvider extends GetConnect {
   
-  String url = Environment.apiChat + 'api/messages';
+  String url = '${Environment.apiChat}api/messages';
 
   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
 
@@ -60,6 +60,30 @@ class MessageProvider extends GetConnect {
    Future<ResponseApi> updateToSeen(String idMessage) async {
     Response response = await put(
       Endpoints.updateToSeen,
+      {
+        'id': idMessage
+      },
+      headers: {
+        'Content-Type': 'Application/json',
+        'Authorization': user.sessionToken!
+      },
+    );
+
+    if (response.body == null) {
+      Get.snackbar('Error', 'Erro ao criar Mensagem');
+      return ResponseApi();
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+
+    return responseApi;
+  }
+
+ 
+
+  Future<ResponseApi> updateToReceived(String idMessage) async {
+    Response response = await put(
+      Endpoints.updateToReceived,
       {
         'id': idMessage
       },
