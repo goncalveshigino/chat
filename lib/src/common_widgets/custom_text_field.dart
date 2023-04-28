@@ -47,7 +47,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
+
+  
+    final colors = Theme.of(context).colorScheme;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
       decoration: BoxDecoration(
@@ -67,16 +71,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
           hintText: widget.hintText,
           border: InputBorder.none,
           contentPadding: const EdgeInsets.all(15),
-          hintStyle: TextStyle(color: MyColors.primaryColorDark),
+          hintStyle: TextStyle(color: colors.primary),
           prefixIcon: Icon(
             widget.icon,
-            color: MyColors.primaryColor,
+            color: colors.primary,
           ),
           suffixIcon: widget.isSecret ? IconButton(onPressed:(){
             setState(() {
               isObscure = !isObscure;
             });
-          }, icon: Icon( isObscure ? Icons.visibility : Icons.visibility_off, color: MyColors.primaryColor,),
+          }, icon: Icon( isObscure ? Icons.visibility : Icons.visibility_off, color: colors.primary,),
           ): null
         ),
       ),

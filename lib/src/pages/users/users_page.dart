@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UsersPage extends StatelessWidget {
+  
   final controller = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de usuarios'),
+        title: const Text('Lista de usuarios', style: TextStyle( color: Colors.white)),
         automaticallyImplyLeading: false,
         backgroundColor: MyColors.primaryColor,
       ),

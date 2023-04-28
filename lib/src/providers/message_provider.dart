@@ -107,7 +107,7 @@ class MessageProvider extends GetConnect {
 
   Future<Stream> createWithImage(MessageModel message, File image) async {
     Uri uri =
-        Uri.http(Environment.API_OLD_CHAT, '/api/messages/createWithImage');
+        Uri.http(Environment.apiOldChat, '/api/messages/createWithImage');
 
     final request = http.MultipartRequest('POST', uri);
     request.headers['Authorization'] = user.sessionToken!;
@@ -125,7 +125,7 @@ class MessageProvider extends GetConnect {
 
   Future<Stream> createWithVideo(MessageModel message, File video) async {
     Uri uri =
-        Uri.http(Environment.API_OLD_CHAT, '/api/messages/createWithVideo');
+        Uri.http(Environment.apiOldChat, '/api/messages/createWithVideo');
 
     final request = http.MultipartRequest('POST', uri);
     request.headers['Authorization'] = user.sessionToken!;

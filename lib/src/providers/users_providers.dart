@@ -10,7 +10,7 @@ import 'package:path/path.dart';
 
 class UsersProvider extends GetConnect {
 
-  String url = Environment.apiChat + 'api/users';
+  String url = '${Environment.apiChat}api/users';
 
   UserModel user = UserModel.fromJson(GetStorage().read('user') ?? {});
 
@@ -133,7 +133,7 @@ class UsersProvider extends GetConnect {
 
 //------------------------------------
   Future<Stream> createWithImage(UserModel user, File image) async {
-    Uri uri = Uri.http(Environment.API_OLD_CHAT, '/api/users/createUser');
+    Uri uri = Uri.http(Environment.apiOldChat, '/api/users/createUser');
 
     final request = http.MultipartRequest('POST', uri);
 
@@ -149,7 +149,7 @@ class UsersProvider extends GetConnect {
   }
 
   Future<Stream> updateWithImage(UserModel user, File image) async {
-    Uri uri = Uri.http(Environment.API_OLD_CHAT, '/api/users/updateWithImage');
+    Uri uri = Uri.http(Environment.apiOldChat, '/api/users/updateWithImage');
 
     final request = http.MultipartRequest('PUT', uri);
     request.headers['Authorization'] = user.sessionToken!;

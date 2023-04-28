@@ -32,6 +32,8 @@ class MessagePage extends StatelessWidget {
                 ),
               ),
               messageBox(context),
+
+              const SizedBox( height: 15,)
             ],
           )),
     );
@@ -88,57 +90,117 @@ class MessagePage extends StatelessWidget {
     );
   }
 
-  Widget messageBox(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      color: Colors.white,
-      elevation: 15,
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: IconButton(
-              onPressed: () => controller.showAlertDialog(context),
-              icon: const Icon(Icons.image_outlined),
+
+
+   Widget messageBox(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only( left: 10, right: 10,bottom: 20),
+      child: Card(
+        margin: EdgeInsets.zero,
+        color: Colors.white,
+        elevation: 15,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                onPressed: () => controller.showAlertDialog(context),
+                icon: const Icon(Icons.image_outlined),
+              ),
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: IconButton(
-              onPressed: () => controller.showAlertDialogForVideo(context),
-              icon: const Icon(Icons.video_call_rounded),
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                onPressed: () => controller.showAlertDialogForVideo(context),
+                icon: const Icon(Icons.video_call_rounded),
+              ),
             ),
-          ),
-          Expanded(
-            flex: 10,
-            child: TextField(
-              maxLines: 2,
-              onChanged: (String text) {
-                controller.emitWriting();
-              },
-              controller: controller.messageController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Escreva tua messagem...',
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 15,
-                  horizontal: 20,
+            Expanded(
+              flex: 10,
+              child: TextField(
+                maxLines: 2,
+                onChanged: (String text) {
+                  controller.emitWriting();
+                },
+                controller: controller.messageController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Escreva tua messagem...',
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 20,
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: IconButton(
-              onPressed: () => controller.sendMessage(),
-              icon: const Icon(Icons.send),
-            ),
-          )
-        ],
+            Expanded(
+              flex: 2,
+              child: IconButton(
+                onPressed: () => controller.sendMessage(),
+                icon: const Icon(Icons.send),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
+
+  // Widget messageBox(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only( left: 10, right: 10,bottom: 20),
+  //     child: Card(
+  //       margin: EdgeInsets.zero,
+  //       color: Colors.white,
+  //       elevation: 15,
+  //       child: Row(
+  //         children: [
+  //           Expanded(
+  //             flex: 1,
+  //             child: IconButton(
+  //               onPressed: () => controller.showAlertDialog(context),
+  //               icon: const Icon(Icons.image_outlined),
+  //             ),
+  //           ),
+  //           Expanded(
+  //             flex: 1,
+  //             child: IconButton(
+  //               onPressed: () => controller.showAlertDialogForVideo(context),
+  //               icon: const Icon(Icons.video_call_rounded),
+  //             ),
+  //           ),
+  //           Expanded(
+  //             flex: 10,
+  //             child: TextField(
+  //               maxLines: 2,
+  //               onChanged: (String text) {
+  //                 controller.emitWriting();
+  //               },
+  //               controller: controller.messageController,
+  //               keyboardType: TextInputType.text,
+  //               decoration: const InputDecoration(
+  //                 border: InputBorder.none,
+  //                 hintText: 'Escreva tua messagem...',
+  //                 contentPadding: EdgeInsets.symmetric(
+  //                   vertical: 15,
+  //                   horizontal: 20,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //           Expanded(
+  //             flex: 2,
+  //             child: IconButton(
+  //               onPressed: () => controller.sendMessage(),
+  //               icon: const Icon(Icons.send),
+  //             ),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget customAppBar() {
     return SafeArea(

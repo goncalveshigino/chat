@@ -18,7 +18,7 @@ class ChatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chats'),
+        title: const Text('Chats', style: TextStyle( color: Colors.white),),
         automaticallyImplyLeading: false,
         backgroundColor: MyColors.primaryColor,
       ),
@@ -90,8 +90,8 @@ class ChatsPage extends StatelessWidget {
               fit: BoxFit.cover,
               placeholder: 'assets/img/user_profile_2.png',
               image: chat.idUser1 == controller.myUser.id
-                  ? chat.imageUser2 ?? Environment.image_url
-                  : chat.imageUser1 ?? Environment.image_url),
+                  ? chat.imageUser2 ?? Environment.imageUrl
+                  : chat.imageUser1 ?? Environment.imageUrl),
         ),
       ),
     );

@@ -7,16 +7,6 @@
     
 
 
-
-
-
-
-
-    
-
-
-
-        
         {
             "name": "iphone 14 pro",
             "request": "launch",
@@ -24,7 +14,7 @@
             "deviceId": "B7161617-1CF5-48D1-BC83-D33A22FAD410"
         },
         {
-            "name": "android",
+            "name": "S23",
             "request": "launch",
             "type": "dart",
             "deviceId": "emulator-5554"
@@ -52,7 +42,7 @@
         {
             "name": "All Devices",
             "configurations": [
-                "android",
+                "S23",
                 "SM",
             ]
         }

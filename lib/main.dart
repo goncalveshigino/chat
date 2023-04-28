@@ -60,7 +60,8 @@ class _MyAppState extends State<MyApp> {
       getPages: AppPages.pages,
       navigatorKey: Get.key,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        //useMaterial3: true,
+        colorSchemeSeed: Colors.red
       ),
     );
   }
