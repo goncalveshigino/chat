@@ -36,9 +36,9 @@ class _BaseScreenState extends State<BaseScreen> {
             navigationController.navigationPageView(index);
           },
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Theme.of(context).primaryColor,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withAlpha(100),
+          elevation: 0,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Theme.of(context).primaryColor.withAlpha(80),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.chat),
