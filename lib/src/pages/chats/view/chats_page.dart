@@ -18,9 +18,8 @@ class ChatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chats', style: TextStyle( color: Colors.white),),
+        title: const Text('Chats', style: TextStyle( color: Colors.black),),
         automaticallyImplyLeading: false,
-        backgroundColor: MyColors.primaryColor,
       ),
       body: Obx(() => SafeArea(
             child: ListView(

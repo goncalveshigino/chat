@@ -17,7 +17,6 @@ class ProfileEditPage extends StatelessWidget {
       bottomNavigationBar: _bottonEdit(context),
       appBar: AppBar(
         title: const Text('Perfil de usuario '),
-        backgroundColor: MyColors.primaryColor,
       ),
       body: SafeArea(
         child: Column(

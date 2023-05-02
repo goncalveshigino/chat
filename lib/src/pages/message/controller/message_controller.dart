@@ -20,6 +20,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class MessageController extends GetxController {
+
   final ImagePicker picker = ImagePicker();
   File? imageFile;
 
@@ -38,6 +39,7 @@ class MessageController extends GetxController {
   String idChat = '';
   List<MessageModel> messages = <MessageModel>[].obs;
   ScrollController scrollController = ScrollController();
+  
   var isWriting = false.obs;
   var isOnline = false.obs;
   String idSocket = '';

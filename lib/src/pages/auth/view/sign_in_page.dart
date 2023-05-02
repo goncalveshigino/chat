@@ -17,11 +17,7 @@ class SignInPage extends StatelessWidget {
   final controller = SignInController();
 
   @override
-  Widget build(BuildContext context) { 
-
-  
-    final colors = Theme.of(context).colorScheme;
-
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -30,7 +26,7 @@ class SignInPage extends StatelessWidget {
             Positioned(
               top: -80,
               left: -100,
-              child: _circleLogin(context),
+              child: _circleLogin(),
             ),
             const Positioned(
               top: 60,
@@ -57,13 +53,13 @@ class SignInPage extends StatelessWidget {
                       isSecret: true,
                       validator: passwordValidator,
                     ),
-                    _bottonLogin(context),
+                    _bottonLogin(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Nao tem uma conta?',
-                          style: TextStyle(color: colors.primary),
+                          style: TextStyle(color: MyColors.primaryColor),
                         ),
                         const SizedBox(
                           width: 7,
@@ -73,7 +69,7 @@ class SignInPage extends StatelessWidget {
                             'Cadastra-se',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: colors.primary),
+                                color: MyColors.primaryColor),
                           ),
                           onTap: () {
                             Get.toNamed(PagesRoutes.signUpRoute);
@@ -91,23 +87,18 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  Widget _circleLogin(BuildContext context) { 
-
-
-    final colors = Theme.of(context).colorScheme;
-
+  Widget _circleLogin() {
     return Container(
       width: 240,
       height: 210,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        color: colors.primary,
+        color: MyColors.primaryColor,
       ),
     );
   }
 
-  Widget _bottonLogin(BuildContext context) {  
-    final colors = Theme.of(context).colorScheme;
+  Widget _bottonLogin() {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
@@ -118,7 +109,7 @@ class SignInPage extends StatelessWidget {
           }
         },
         style: ElevatedButton.styleFrom(
-            backgroundColor: colors.primary,
+            backgroundColor: MyColors.primaryColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             padding: const EdgeInsets.symmetric(vertical: 15)),

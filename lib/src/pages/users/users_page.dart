@@ -1,4 +1,5 @@
 import 'package:chat/src/models/user_model.dart';
+import 'package:chat/src/pages/message/controller/message_controller.dart';
 import 'package:chat/src/pages/users/controller/userController.dart';
 import 'package:chat/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,13 @@ class UsersPage extends StatelessWidget {
   
   final controller = Get.put(UserController());
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de usuarios', style: TextStyle( color: Colors.white)),
+        title: const Text('Lista de usuarios', style: TextStyle( color: Colors.black)),
         automaticallyImplyLeading: false,
-        backgroundColor: MyColors.primaryColor,
       ),
       body: SafeArea(
         child: FutureBuilder(
