@@ -62,6 +62,7 @@ class ProfileEditPage extends StatelessWidget {
         ),
         child: const Text(
           'EDITAR PERFIL',
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );

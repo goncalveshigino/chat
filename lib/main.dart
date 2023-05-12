@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: Get.key,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
+        colorSchemeSeed: Colors.red,
       ),
     );
   }

@@ -23,13 +23,14 @@ class SignInPage extends StatelessWidget {
         width: double.infinity,
         child: Stack(
           children: [
+            
             Positioned(
-              top: -80,
-              left: -100,
+              top: 80,
+              left: -90,
               child: _circleLogin(),
             ),
             const Positioned(
-              top: 60,
+              top: 170,
               left: 25,
               child: CustumSignInOrSignUp(text: 'SignIn'),
             ),
@@ -38,7 +39,15 @@ class SignInPage extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   children: [
-                    _imageBanner(context),
+                    
+                   Container(
+                      height: 200,
+                      margin: EdgeInsets.only(
+                        top: 100,
+                        bottom: MediaQuery.of(context).size.height * 0.22,
+                      ),
+                    
+                    ),
                     CustomTextField(
                       controller: controller.emailController,
                       hintText: 'Email',
@@ -114,7 +123,8 @@ class SignInPage extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             padding: const EdgeInsets.symmetric(vertical: 15)),
         child: const Text(
-          'Entrar',
+          'Entrar', 
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -122,15 +132,12 @@ class SignInPage extends StatelessWidget {
 
   Widget _imageBanner(BuildContext context) {
     return Container(
+      height: 200,
       margin: EdgeInsets.only(
         top: 100,
         bottom: MediaQuery.of(context).size.height * 0.22,
       ),
-      child: Image.asset(
-        'assets/img/chat.png',
-        width: 200,
-        height: 200,
-      ),
+     
     );
   }
 }

@@ -168,6 +168,7 @@ class MessageController extends GetxController {
   }
 
   Future<void> sendMessage() async {
+
     String messaageText = messageController.text;
 
     if (messaageText.isEmpty) {
@@ -202,6 +203,8 @@ class MessageController extends GetxController {
     messages.clear();
     messages.addAll(result);
 
+   
+  
     messages.forEach((m) async {
       if (m.status != 'VISTO' && m.idReceiver == myUser.id) {
         await messageProvider.updateToSeen(m.id!);

@@ -11,37 +11,62 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            heroTag: null,
-            onPressed: () => controller.goToProfileEdit(),
-            backgroundColor: Colors.grey.shade400,
-            child: const Icon(Icons.edit),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          FloatingActionButton(
-            onPressed: () => controller.signOut(),
-            child: const Icon(Icons.power_settings_new),
-          ),
-        ],
-      ),
+  
       body: Obx(
         () => SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              circleUser(),
-             const Divider(height: 20,),
-              userInfo(
-                  'Nome do usuario',
-                  '${controller.user.value.firstname!} ${controller.user.value.lastname!}',
-                  Icons.person),
-              userInfo('Email', controller.user.value.email!, Icons.email),
-              userInfo('Telefone', controller.user.value.phone!, Icons.phone),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  circleUser(),
+                  const Divider(
+                    height: 20,
+                  ),
+                  userInfo(
+                      'Nome do usuario',
+                      '${controller.user.value.firstname!} ${controller.user.value.lastname!}',
+                      Icons.person),
+                  userInfo(
+                    'Email',
+                    controller.user.value.email!,
+                    Icons.email,
+                  ),
+                  userInfo(
+                      'Telefone', controller.user.value.phone!, Icons.phone),
+                ],
+              ),
+              
+             
+
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20))),
+                  child: PopupMenuButton(
+                  position: PopupMenuPosition.under,
+                  onSelected: (e){
+                    if(e == 'Editar'){
+                      controller.goToProfileEdit();
+                    }else {
+                      controller.signOut();
+                    }
+                  },
+
+                    itemBuilder: (_){
+
+                      return['Editar','Sair'].map((e){
+                        return PopupMenuItem(
+                          value: e,
+                          child: Text(e),
+                        );
+                      }).toList();
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -60,12 +85,10 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-
-
   Widget circleUser() {
     return Container(
       width: 150,
-       margin: const EdgeInsets.only(top: 30, left: 30),
+      margin: const EdgeInsets.only(top: 30, left: 30),
       child: AspectRatio(
         aspectRatio: 1,
         child: ClipOval(

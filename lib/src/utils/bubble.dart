@@ -16,7 +16,7 @@ class Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = isMe ? Colors.white : MyColors.primaryColorLight;
+    final bg = isMe ? Colors.white : Color.fromARGB(255, 241, 186, 181);
     final align = isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end;
     final icon = status == 'ENVIADO'
         ? Icons.done
